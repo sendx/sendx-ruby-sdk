@@ -11,5 +11,5 @@ Generator version: 7.8.0
 =end
 
 module SendX
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 end
