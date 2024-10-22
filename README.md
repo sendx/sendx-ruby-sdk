@@ -1,8 +1,8 @@
-# sendx-ruby-sdk
+# SendX Ruby SDK
 
 SendX - the Ruby gem for the SendX REST API
 
-# Introduction 
+## Introduction 
 
 SendX is an email marketing product. It helps you convert website visitors to customers, send them promotional emails, engage with them using drip sequences and craft custom journeys using powerful but simple automations. 
 
@@ -14,29 +14,26 @@ The SendX Rest API doesn’t support bulk updates. You can work on only one obje
 
 ### Build a gem
 
-To build the Ruby code into a gem:
 
+To install the gem:
+
+Install via command line
 ```shell
-gem build sendx-ruby-sdk.gemspec
+gem install sendx-ruby-sdk
 ```
 
-Then either install the gem locally:
+Install via Gemfile
 
-```shell
-gem install ./sendx-ruby-sdk-1.0.0.gem
+```ruby
+source "https://rubygems.pkg.github.com/sendx" do
+  gem "sendx-ruby-sdk", "1.0.1"
+end
 ```
 
-(for development, run `gem install --dev ./sendx-ruby-sdk-1.0.0.gem` to install the development dependencies)
-
-or publish the gem to a gem hosting service, e.g. [RubyGems](https://rubygems.org/).
-
-Finally add this to the Gemfile:
-
-    gem 'sendx-ruby-sdk', '~> 1.0.0'
 
 ### Install from Git
 
-If the Ruby gem is hosted at a git repository: https://github.com/sendx/sendx-ruby-sdk, then add the following in the Gemfile:
+The Ruby gem is hosted at a git repository: https://github.com/sendx/sendx-ruby-sdk, add the following in the Gemfile:
 
     gem 'sendx-ruby-sdk', :git => 'https://github.com/sendx/sendx-ruby-sdk.git'
 
