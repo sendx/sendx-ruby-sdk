@@ -54,25 +54,35 @@ Please follow the [installation](#installation) procedure and then run the follo
 
 ```ruby
 # Load the gem
+require 'time'
 require 'sendx-ruby-sdk'
-
-# Setup authorization
+# setup authorization
 SendX.configure do |config|
   # Configure API key authorization: apiKeyAuth
   config.api_key['apiKeyAuth'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  config.server_index = 2
 end
 
-api_instance = SendX::CampaignApi.new
-campaign_request = SendX::CampaignRequest.new # CampaignRequest | The campaign content
+api_instance = SendX::ContactApi.new
+contact_request = SendX::ContactRequest.new(
+  email: "john@doe.com",
+  first_name: "John",
+  last_name: "Doe",
+  company: "SendX",
+  last_tracked_ip: "34.94.159.140",
+  tags: ["MKdhTovsTJDetCyrJmRySL"],
+  custom_fields: {
+        'fnwfnke23kn4kn' => "VIP",
+        "9i0jinjn0ib0"=> "Subscribers"
+    },
+)
 
 begin
-  #Create Campaign
-  result = api_instance.create_campaign(campaign_request)
+  # Create a contact
+  result = api_instance.create_contact(contact_request)
   p result
 rescue SendX::ApiError => e
-  puts "Exception when calling CampaignApi->create_campaign: #{e}"
+  puts "Error when calling ContactApi->create_contact: #{e}"
 end
 
 ```
