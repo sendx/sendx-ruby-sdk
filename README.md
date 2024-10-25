@@ -1,4 +1,4 @@
-# SendX Ruby SDK
+# [SendX Ruby SDK](https://rubygems.org/gems/sendx-ruby-sdk)
 
 SendX - the Ruby gem for the SendX REST API
 
