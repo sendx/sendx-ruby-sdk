@@ -1,4 +1,5 @@
 # [SendX Ruby SDK](https://rubygems.org/gems/sendx-ruby-sdk)
+[![Gem Version](https://badge.fury.io/rb/sendx-ruby-sdk.svg)](https://badge.fury.io/rb/sendx-ruby-sdk)
 
 SendX - the Ruby gem for the SendX REST API
 
