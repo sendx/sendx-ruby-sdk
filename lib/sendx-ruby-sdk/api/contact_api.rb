@@ -89,29 +89,29 @@ module SendX
 
     # Delete Contact
     # Deletes Contact
-    # @param contact_id [String] The Contact ID to delete
+    # @param identifier [String] The Contact ID/ Email to delete
     # @param [Hash] opts the optional parameters
     # @return [Response]
-    def delete_contact(contact_id, opts = {})
-      data, _status_code, _headers = delete_contact_with_http_info(contact_id, opts)
+    def delete_contact(identifier, opts = {})
+      data, _status_code, _headers = delete_contact_with_http_info(identifier, opts)
       data
     end
 
     # Delete Contact
     # Deletes Contact
-    # @param contact_id [String] The Contact ID to delete
+    # @param identifier [String] The Contact ID/ Email to delete
     # @param [Hash] opts the optional parameters
     # @return [Array<(Response, Integer, Hash)>] Response data, response status code and response headers
-    def delete_contact_with_http_info(contact_id, opts = {})
+    def delete_contact_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.delete_contact ...'
       end
-      # verify the required parameter 'contact_id' is set
-      if @api_client.config.client_side_validation && contact_id.nil?
-        fail ArgumentError, "Missing the required parameter 'contact_id' when calling ContactApi.delete_contact"
+      # verify the required parameter 'identifier' is set
+      if @api_client.config.client_side_validation && identifier.nil?
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.delete_contact"
       end
       # resource path
-      local_var_path = '/contact/{contactId}'.sub('{' + 'contactId' + '}', CGI.escape(contact_id.to_s))
+      local_var_path = '/contact/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -223,31 +223,31 @@ module SendX
       return data, status_code, headers
     end
 
-    # Get Contact by ID
-    # Retrieve a specific contact by its contactId.
-    # @param contact_id [String] The ID of the contact to retrieve.
+    # Get Contact by Identifier
+    # Retrieve a specific contact by its identifier.
+    # @param identifier [String] The ID or Email of the contact to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Contact]
-    def get_contact_by_id(contact_id, opts = {})
-      data, _status_code, _headers = get_contact_by_id_with_http_info(contact_id, opts)
+    def get_contact_by_id(identifier, opts = {})
+      data, _status_code, _headers = get_contact_by_id_with_http_info(identifier, opts)
       data
     end
 
-    # Get Contact by ID
-    # Retrieve a specific contact by its contactId.
-    # @param contact_id [String] The ID of the contact to retrieve.
+    # Get Contact by Identifier
+    # Retrieve a specific contact by its identifier.
+    # @param identifier [String] The ID or Email of the contact to retrieve.
     # @param [Hash] opts the optional parameters
     # @return [Array<(Contact, Integer, Hash)>] Contact data, response status code and response headers
-    def get_contact_by_id_with_http_info(contact_id, opts = {})
+    def get_contact_by_id_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.get_contact_by_id ...'
       end
-      # verify the required parameter 'contact_id' is set
-      if @api_client.config.client_side_validation && contact_id.nil?
-        fail ArgumentError, "Missing the required parameter 'contact_id' when calling ContactApi.get_contact_by_id"
+      # verify the required parameter 'identifier' is set
+      if @api_client.config.client_side_validation && identifier.nil?
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.get_contact_by_id"
       end
       # resource path
-      local_var_path = '/contact/{contactId}'.sub('{' + 'contactId' + '}', CGI.escape(contact_id.to_s))
+      local_var_path = '/contact/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -288,29 +288,29 @@ module SendX
 
     # Unsubscribe Contact
     # Unsubscribe a globally existing contact
-    # @param contact_id [String] The Contact ID to unsubscribe
+    # @param identifier [String] The Contact ID or email to unsubscribe
     # @param [Hash] opts the optional parameters
     # @return [Response]
-    def unsubscribe_contact(contact_id, opts = {})
-      data, _status_code, _headers = unsubscribe_contact_with_http_info(contact_id, opts)
+    def unsubscribe_contact(identifier, opts = {})
+      data, _status_code, _headers = unsubscribe_contact_with_http_info(identifier, opts)
       data
     end
 
     # Unsubscribe Contact
     # Unsubscribe a globally existing contact
-    # @param contact_id [String] The Contact ID to unsubscribe
+    # @param identifier [String] The Contact ID or email to unsubscribe
     # @param [Hash] opts the optional parameters
     # @return [Array<(Response, Integer, Hash)>] Response data, response status code and response headers
-    def unsubscribe_contact_with_http_info(contact_id, opts = {})
+    def unsubscribe_contact_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.unsubscribe_contact ...'
       end
-      # verify the required parameter 'contact_id' is set
-      if @api_client.config.client_side_validation && contact_id.nil?
-        fail ArgumentError, "Missing the required parameter 'contact_id' when calling ContactApi.unsubscribe_contact"
+      # verify the required parameter 'identifier' is set
+      if @api_client.config.client_side_validation && identifier.nil?
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.unsubscribe_contact"
       end
       # resource path
-      local_var_path = '/contact/unsubscribe/{contactId}'.sub('{' + 'contactId' + '}', CGI.escape(contact_id.to_s))
+      local_var_path = '/contact/unsubscribe/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -352,21 +352,21 @@ module SendX
     # Update Contact
     # Update Contact with given data
     # @param contact_request [ContactRequest] 
-    # @param contact_id [String] The ID of the Contact to update
+    # @param identifier [String] The ID or email of the Contact to update
     # @param [Hash] opts the optional parameters
     # @return [Contact]
-    def update_contact(contact_request, contact_id, opts = {})
-      data, _status_code, _headers = update_contact_with_http_info(contact_request, contact_id, opts)
+    def update_contact(contact_request, identifier, opts = {})
+      data, _status_code, _headers = update_contact_with_http_info(contact_request, identifier, opts)
       data
     end
 
     # Update Contact
     # Update Contact with given data
     # @param contact_request [ContactRequest] 
-    # @param contact_id [String] The ID of the Contact to update
+    # @param identifier [String] The ID or email of the Contact to update
     # @param [Hash] opts the optional parameters
     # @return [Array<(Contact, Integer, Hash)>] Contact data, response status code and response headers
-    def update_contact_with_http_info(contact_request, contact_id, opts = {})
+    def update_contact_with_http_info(contact_request, identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.update_contact ...'
       end
@@ -374,12 +374,12 @@ module SendX
       if @api_client.config.client_side_validation && contact_request.nil?
         fail ArgumentError, "Missing the required parameter 'contact_request' when calling ContactApi.update_contact"
       end
-      # verify the required parameter 'contact_id' is set
-      if @api_client.config.client_side_validation && contact_id.nil?
-        fail ArgumentError, "Missing the required parameter 'contact_id' when calling ContactApi.update_contact"
+      # verify the required parameter 'identifier' is set
+      if @api_client.config.client_side_validation && identifier.nil?
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.update_contact"
       end
       # resource path
-      local_var_path = '/contact/{contactId}'.sub('{' + 'contactId' + '}', CGI.escape(contact_id.to_s))
+      local_var_path = '/contact/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
