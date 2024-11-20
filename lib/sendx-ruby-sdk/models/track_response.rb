@@ -14,15 +14,15 @@ require 'date'
 require 'time'
 
 module SendX
-  class DeleteResponse
-    attr_accessor :id
+  class TrackResponse
+    attr_accessor :status
 
     attr_accessor :message
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
+        :'status' => :'status',
         :'message' => :'message'
       }
     end
@@ -35,7 +35,7 @@ module SendX
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
+        :'status' => :'String',
         :'message' => :'String'
       }
     end
@@ -50,19 +50,19 @@ module SendX
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `SendX::DeleteResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `SendX::TrackResponse` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::DeleteResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::TrackResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'status')
+        self.status = attributes[:'status']
       end
 
       if attributes.key?(:'message')
@@ -90,7 +90,7 @@ module SendX
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
+          status == o.status &&
           message == o.message
     end
 
@@ -103,7 +103,7 @@ module SendX
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, message].hash
+      [status, message].hash
     end
 
     # Builds the object from hash

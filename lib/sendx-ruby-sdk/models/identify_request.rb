@@ -14,16 +14,36 @@ require 'date'
 require 'time'
 
 module SendX
-  class DeleteResponse
-    attr_accessor :id
+  class IdentifyRequest
+    # First name of the contact.
+    attr_accessor :first_name
 
-    attr_accessor :message
+    # Last name of the contact.
+    attr_accessor :last_name
+
+    # Email address of the contact.
+    attr_accessor :email
+
+    # New email address of the contact.
+    attr_accessor :new_email
+
+    # Company of the contact.
+    attr_accessor :company
+
+    attr_accessor :tags
+
+    attr_accessor :custom_fields
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'message' => :'message'
+        :'first_name' => :'firstName',
+        :'last_name' => :'lastName',
+        :'email' => :'email',
+        :'new_email' => :'newEmail',
+        :'company' => :'company',
+        :'tags' => :'tags',
+        :'custom_fields' => :'customFields'
       }
     end
 
@@ -35,8 +55,13 @@ module SendX
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'message' => :'String'
+        :'first_name' => :'String',
+        :'last_name' => :'String',
+        :'email' => :'String',
+        :'new_email' => :'String',
+        :'company' => :'String',
+        :'tags' => :'Array<String>',
+        :'custom_fields' => :'Hash<String, String>'
       }
     end
 
@@ -50,23 +75,49 @@ module SendX
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `SendX::DeleteResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `SendX::IdentifyRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::DeleteResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::IdentifyRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'first_name')
+        self.first_name = attributes[:'first_name']
       end
 
-      if attributes.key?(:'message')
-        self.message = attributes[:'message']
+      if attributes.key?(:'last_name')
+        self.last_name = attributes[:'last_name']
+      end
+
+      if attributes.key?(:'email')
+        self.email = attributes[:'email']
+      else
+        self.email = nil
+      end
+
+      if attributes.key?(:'new_email')
+        self.new_email = attributes[:'new_email']
+      end
+
+      if attributes.key?(:'company')
+        self.company = attributes[:'company']
+      end
+
+      if attributes.key?(:'tags')
+        if (value = attributes[:'tags']).is_a?(Array)
+          self.tags = value
+        end
+      end
+
+      if attributes.key?(:'custom_fields')
+        if (value = attributes[:'custom_fields']).is_a?(Hash)
+          self.custom_fields = value
+        end
       end
     end
 
@@ -75,6 +126,10 @@ module SendX
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @email.nil?
+        invalid_properties.push('invalid value for "email", email cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -82,6 +137,7 @@ module SendX
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @email.nil?
       true
     end
 
@@ -90,8 +146,13 @@ module SendX
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          message == o.message
+          first_name == o.first_name &&
+          last_name == o.last_name &&
+          email == o.email &&
+          new_email == o.new_email &&
+          company == o.company &&
+          tags == o.tags &&
+          custom_fields == o.custom_fields
     end
 
     # @see the `==` method
@@ -103,7 +164,7 @@ module SendX
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, message].hash
+      [first_name, last_name, email, new_email, company, tags, custom_fields].hash
     end
 
     # Builds the object from hash

@@ -27,7 +27,7 @@ Install via Gemfile
 
 ```ruby
 source "https://rubygems.pkg.github.com/sendx" do
-  gem "sendx-ruby-sdk", "1.0.1"
+  gem "sendx-ruby-sdk", "1.1.0"
 end
 ```
 
@@ -97,11 +97,15 @@ Class | Method | HTTP request | Description
 *SendX::CampaignApi* | [**get_all_campaigns**](docs/CampaignApi.md#get_all_campaigns) | **GET** /campaign | Get All Campaigns
 *SendX::CampaignApi* | [**get_campaign_by_id**](docs/CampaignApi.md#get_campaign_by_id) | **GET** /campaign/{campaignId} | Get Campaign By Id
 *SendX::ContactApi* | [**create_contact**](docs/ContactApi.md#create_contact) | **POST** /contact | Create a contact
-*SendX::ContactApi* | [**delete_contact**](docs/ContactApi.md#delete_contact) | **DELETE** /contact/{contactId} | Delete Contact
+*SendX::ContactApi* | [**delete_contact**](docs/ContactApi.md#delete_contact) | **DELETE** /contact/{identifier} | Delete Contact
 *SendX::ContactApi* | [**get_all_contacts**](docs/ContactApi.md#get_all_contacts) | **GET** /contact | Get All Contacts
-*SendX::ContactApi* | [**get_contact_by_id**](docs/ContactApi.md#get_contact_by_id) | **GET** /contact/{contactId} | Get Contact by ID
-*SendX::ContactApi* | [**unsubscribe_contact**](docs/ContactApi.md#unsubscribe_contact) | **POST** /contact/unsubscribe/{contactId} | Unsubscribe Contact
-*SendX::ContactApi* | [**update_contact**](docs/ContactApi.md#update_contact) | **PUT** /contact/{contactId} | Update Contact
+*SendX::ContactApi* | [**get_contact_by_id**](docs/ContactApi.md#get_contact_by_id) | **GET** /contact/{identifier} | Get Contact by Identifier
+*SendX::ContactApi* | [**unsubscribe_contact**](docs/ContactApi.md#unsubscribe_contact) | **POST** /contact/unsubscribe/{identifier} | Unsubscribe Contact
+*SendX::ContactApi* | [**update_contact**](docs/ContactApi.md#update_contact) | **PUT** /contact/{identifier} | Update Contact
+*SendX::EventApi* | [**create_revenue_event**](docs/EventApi.md#create_revenue_event) | **POST** /events/revenue | Record a revenue event for a specific contact
+*SendX::EventApi* | [**push_custom_event**](docs/EventApi.md#push_custom_event) | **POST** /events/custom | Push a custom event associated with a contact
+*SendX::GettingStartedApi* | [**identify_contact**](docs/GettingStartedApi.md#identify_contact) | **POST** /contact/identify | Identify contact
+*SendX::GettingStartedApi* | [**tracking_contact**](docs/GettingStartedApi.md#tracking_contact) | **POST** /contact/track | Add Tracking info
 *SendX::ListApi* | [**create_list**](docs/ListApi.md#create_list) | **POST** /list | Create List
 *SendX::ListApi* | [**delete_list**](docs/ListApi.md#delete_list) | **DELETE** /list/{listId} | Delete List
 *SendX::ListApi* | [**get_all_lists**](docs/ListApi.md#get_all_lists) | **GET** /list | Get All Lists
@@ -125,20 +129,27 @@ Class | Method | HTTP request | Description
  - [SendX::Contact](docs/Contact.md)
  - [SendX::ContactRequest](docs/ContactRequest.md)
  - [SendX::CreateResponse](docs/CreateResponse.md)
+ - [SendX::CustomEventRequest](docs/CustomEventRequest.md)
  - [SendX::DashboardStats](docs/DashboardStats.md)
  - [SendX::DeleteCampaign200Response](docs/DeleteCampaign200Response.md)
  - [SendX::DeleteRequest](docs/DeleteRequest.md)
  - [SendX::DeleteResponse](docs/DeleteResponse.md)
+ - [SendX::EventResponse](docs/EventResponse.md)
+ - [SendX::IdentifyRequest](docs/IdentifyRequest.md)
+ - [SendX::IdentifyResponse](docs/IdentifyResponse.md)
  - [SendX::LastSentCampaignStat](docs/LastSentCampaignStat.md)
  - [SendX::ListModel](docs/ListModel.md)
  - [SendX::ListRequest](docs/ListRequest.md)
  - [SendX::ReportData](docs/ReportData.md)
  - [SendX::Response](docs/Response.md)
+ - [SendX::RevenueEventRequest](docs/RevenueEventRequest.md)
  - [SendX::Sender](docs/Sender.md)
  - [SendX::SenderRequest](docs/SenderRequest.md)
  - [SendX::SenderResponse](docs/SenderResponse.md)
  - [SendX::Tag](docs/Tag.md)
  - [SendX::TagRequest](docs/TagRequest.md)
+ - [SendX::TrackRequest](docs/TrackRequest.md)
+ - [SendX::TrackResponse](docs/TrackResponse.md)
 
 
 ## Documentation for Authorization

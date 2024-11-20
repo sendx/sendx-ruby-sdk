@@ -14,16 +14,30 @@ require 'date'
 require 'time'
 
 module SendX
-  class DeleteResponse
-    attr_accessor :id
+  class RevenueEventRequest
+    # Unique identifier for the contact.
+    attr_accessor :identifier
 
-    attr_accessor :message
+    # Recognized revenue amount associated with the event.
+    attr_accessor :amount
+
+    # Currency code (ISO 4217) for the revenue (e.g., 'USD', 'EUR', 'INR').
+    attr_accessor :currency
+
+    # Source of the revenue (e.g., 'website', 'mobile app', 'partner referral').
+    attr_accessor :source
+
+    # Unix timestamp indicating when the revenue event occurred.
+    attr_accessor :time
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'message' => :'message'
+        :'identifier' => :'identifier',
+        :'amount' => :'amount',
+        :'currency' => :'currency',
+        :'source' => :'source',
+        :'time' => :'time'
       }
     end
 
@@ -35,8 +49,11 @@ module SendX
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'message' => :'String'
+        :'identifier' => :'String',
+        :'amount' => :'Float',
+        :'currency' => :'String',
+        :'source' => :'String',
+        :'time' => :'Integer'
       }
     end
 
@@ -50,23 +67,45 @@ module SendX
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `SendX::DeleteResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `SendX::RevenueEventRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::DeleteResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::RevenueEventRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'identifier')
+        self.identifier = attributes[:'identifier']
+      else
+        self.identifier = nil
       end
 
-      if attributes.key?(:'message')
-        self.message = attributes[:'message']
+      if attributes.key?(:'amount')
+        self.amount = attributes[:'amount']
+      else
+        self.amount = nil
+      end
+
+      if attributes.key?(:'currency')
+        self.currency = attributes[:'currency']
+      else
+        self.currency = nil
+      end
+
+      if attributes.key?(:'source')
+        self.source = attributes[:'source']
+      else
+        self.source = nil
+      end
+
+      if attributes.key?(:'time')
+        self.time = attributes[:'time']
+      else
+        self.time = nil
       end
     end
 
@@ -75,6 +114,26 @@ module SendX
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @identifier.nil?
+        invalid_properties.push('invalid value for "identifier", identifier cannot be nil.')
+      end
+
+      if @amount.nil?
+        invalid_properties.push('invalid value for "amount", amount cannot be nil.')
+      end
+
+      if @currency.nil?
+        invalid_properties.push('invalid value for "currency", currency cannot be nil.')
+      end
+
+      if @source.nil?
+        invalid_properties.push('invalid value for "source", source cannot be nil.')
+      end
+
+      if @time.nil?
+        invalid_properties.push('invalid value for "time", time cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -82,6 +141,11 @@ module SendX
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @identifier.nil?
+      return false if @amount.nil?
+      return false if @currency.nil?
+      return false if @source.nil?
+      return false if @time.nil?
       true
     end
 
@@ -90,8 +154,11 @@ module SendX
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          message == o.message
+          identifier == o.identifier &&
+          amount == o.amount &&
+          currency == o.currency &&
+          source == o.source &&
+          time == o.time
     end
 
     # @see the `==` method
@@ -103,7 +170,7 @@ module SendX
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, message].hash
+      [identifier, amount, currency, source, time].hash
     end
 
     # Builds the object from hash

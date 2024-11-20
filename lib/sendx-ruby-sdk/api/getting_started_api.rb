@@ -13,37 +13,37 @@ Generator version: 7.8.0
 require 'cgi'
 
 module SendX
-  class SenderApi
+  class GettingStartedApi
     attr_accessor :api_client
 
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create Sender
-    # Creates a new sender in the system.
-    # @param sender_request [SenderRequest] 
+    # Identify contact
+    # Identify a contact by email address. If the contact already exists, it will be updated.
+    # @param identify_request [IdentifyRequest] 
     # @param [Hash] opts the optional parameters
-    # @return [Sender]
-    def create_sender(sender_request, opts = {})
-      data, _status_code, _headers = create_sender_with_http_info(sender_request, opts)
+    # @return [IdentifyResponse]
+    def identify_contact(identify_request, opts = {})
+      data, _status_code, _headers = identify_contact_with_http_info(identify_request, opts)
       data
     end
 
-    # Create Sender
-    # Creates a new sender in the system.
-    # @param sender_request [SenderRequest] 
+    # Identify contact
+    # Identify a contact by email address. If the contact already exists, it will be updated.
+    # @param identify_request [IdentifyRequest] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(Sender, Integer, Hash)>] Sender data, response status code and response headers
-    def create_sender_with_http_info(sender_request, opts = {})
+    # @return [Array<(IdentifyResponse, Integer, Hash)>] IdentifyResponse data, response status code and response headers
+    def identify_contact_with_http_info(identify_request, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SenderApi.create_sender ...'
+        @api_client.config.logger.debug 'Calling API: GettingStartedApi.identify_contact ...'
       end
-      # verify the required parameter 'sender_request' is set
-      if @api_client.config.client_side_validation && sender_request.nil?
-        fail ArgumentError, "Missing the required parameter 'sender_request' when calling SenderApi.create_sender"
+      # verify the required parameter 'identify_request' is set
+      if @api_client.config.client_side_validation && identify_request.nil?
+        fail ArgumentError, "Missing the required parameter 'identify_request' when calling GettingStartedApi.identify_contact"
       end
       # resource path
-      local_var_path = '/sender'
+      local_var_path = '/contact/identify'
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -62,16 +62,16 @@ module SendX
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(sender_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(identify_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Sender'
+      return_type = opts[:debug_return_type] || 'IdentifyResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
 
       new_options = opts.merge(
-        :operation => :"SenderApi.create_sender",
+        :operation => :"GettingStartedApi.identify_contact",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -82,62 +82,64 @@ module SendX
 
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SenderApi#create_sender\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: GettingStartedApi#identify_contact\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
-    # Get All Senders
-    # Retrieve all senders for the team, with optional filters like offset, limit, and search.
+    # Add Tracking info
+    # Track a contact
+    # @param track_request [TrackRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :offset Number of records to skip (default to 0)
-    # @option opts [Integer] :limit Maximum number of records to return (default to 10)
-    # @option opts [String] :search Search keyword to filter senders by name or email
-    # @return [Array<SenderResponse>]
-    def get_all_senders(opts = {})
-      data, _status_code, _headers = get_all_senders_with_http_info(opts)
+    # @return [TrackResponse]
+    def tracking_contact(track_request, opts = {})
+      data, _status_code, _headers = tracking_contact_with_http_info(track_request, opts)
       data
     end
 
-    # Get All Senders
-    # Retrieve all senders for the team, with optional filters like offset, limit, and search.
+    # Add Tracking info
+    # Track a contact
+    # @param track_request [TrackRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :offset Number of records to skip (default to 0)
-    # @option opts [Integer] :limit Maximum number of records to return (default to 10)
-    # @option opts [String] :search Search keyword to filter senders by name or email
-    # @return [Array<(Array<SenderResponse>, Integer, Hash)>] Array<SenderResponse> data, response status code and response headers
-    def get_all_senders_with_http_info(opts = {})
+    # @return [Array<(TrackResponse, Integer, Hash)>] TrackResponse data, response status code and response headers
+    def tracking_contact_with_http_info(track_request, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SenderApi.get_all_senders ...'
+        @api_client.config.logger.debug 'Calling API: GettingStartedApi.tracking_contact ...'
+      end
+      # verify the required parameter 'track_request' is set
+      if @api_client.config.client_side_validation && track_request.nil?
+        fail ArgumentError, "Missing the required parameter 'track_request' when calling GettingStartedApi.tracking_contact"
       end
       # resource path
-      local_var_path = '/sender'
+      local_var_path = '/contact/track'
 
       # query parameters
       query_params = opts[:query_params] || {}
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(track_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Array<SenderResponse>'
+      return_type = opts[:debug_return_type] || 'TrackResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
 
       new_options = opts.merge(
-        :operation => :"SenderApi.get_all_senders",
+        :operation => :"GettingStartedApi.tracking_contact",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -146,9 +148,9 @@ module SendX
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SenderApi#get_all_senders\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: GettingStartedApi#tracking_contact\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
