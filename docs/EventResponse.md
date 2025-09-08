@@ -4,9 +4,8 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **event_id** | **String** | Unique identifier for the created event. | [optional] |
-| **status** | **String** | Status of the event creation (e.g., &#39;success&#39;). | [optional] |
-| **message** | **String** | Additional message about the event creation. | [optional] |
+| **status** | **String** |  | [optional] |
+| **message** | **String** |  | [optional] |
 
 ## Example
 
@@ -14,9 +13,8 @@
 require 'sendx-ruby-sdk'
 
 instance = SendX::EventResponse.new(
-  event_id: m3m2k3mnkjn23nkj3,
   status: success,
-  message: Event created successfully.
+  message: Event tracked successfully
 )
 ```
 

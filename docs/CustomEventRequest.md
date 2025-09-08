@@ -4,10 +4,10 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **name** | **String** | Name of the custom event (e.g., &#39;abandoned_cart&#39;). |  |
-| **identifier** | **String** | Unique identifier for the contact (e.g., contact&#39;s email). |  |
-| **data** | **Hash&lt;String, String&gt;** | Map of property-value pairs associated with the event, where both key and value are strings. |  |
-| **time** | **Integer** | Unix timestamp of when the event occurred. |  |
+| **identifier** | **String** | This is the contact identifier. Contact id and email can be used interchangeably.  | [optional] |
+| **name** | **String** | Event name |  |
+| **data** | **Hash&lt;String, Object&gt;** | Event data | [optional] |
+| **time** | **Integer** | Unix timestamp (in seconds since January 1, 1970) representing when the event occurred. | [optional] |
 
 ## Example
 
@@ -15,9 +15,9 @@
 require 'sendx-ruby-sdk'
 
 instance = SendX::CustomEventRequest.new(
-  name: abandoned_cart,
-  identifier: john.doe@example.com,
-  data: {&quot;price&quot;:&quot;29.99&quot;,&quot;currency&quot;:&quot;USD&quot;,&quot;item_count&quot;:&quot;3&quot;},
+  identifier: user@example.com,
+  name: video_watched,
+  data: {video_id&#x3D;12345, duration&#x3D;120, completed&#x3D;true},
   time: 1669990400
 )
 ```

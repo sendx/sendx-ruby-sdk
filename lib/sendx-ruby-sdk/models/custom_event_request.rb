@@ -1,12 +1,12 @@
 =begin
 #SendX REST API
 
-## Introduction SendX is an email marketing product. It helps you convert website visitors to customers, send them promotional emails, engage with them using drip sequences and craft custom journeys using powerful but simple automations. The SendX API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. The SendX Rest API doesn’t support bulk updates. You can work on only one object per request. <br> 
+## SendX REST API Documentation  ## 🚀 Introduction  The SendX API is organized around REST principles. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.  **Key Features:** - 🔒 **Security**: Team-based authentication with optional member-level access - 🎯 **Resource-Oriented**: RESTful design with clear resource boundaries - 📊 **Rich Data Models**: Three-layer model system (Input/Output/Internal) - 🔗 **Relationships**: Automatic prefix handling for resource relationships - 📈 **Scalable**: Built for high-volume email marketing operations  ## 🏗️ Architecture Overview  SendX uses a three-layer model architecture:  1. **Input Models** (`RestE*`): For API requests 2. **Output Models** (`RestR*`): For API responses with prefixed IDs 3. **Internal Models**: Core business logic (not exposed in API)  ## 🔐 Security & Authentication  SendX uses API key authentication:  ### Team API Key ```http X-Team-ApiKey: YOUR_TEAM_API_KEY ``` - **Required for all requests** - Team-level access to resources - Available in SendX Settings → Team API Key  ## 🆔 Encrypted ID System  SendX uses encrypted IDs for security and better developer experience:  - **Internal IDs**: Sequential integers (not exposed) - **Encrypted IDs**: 22-character alphanumeric strings - **Prefixed IDs**: Resource-type prefixes in API responses (`contact_<22-char-id>`)  ### ID Format  **All resource IDs follow this pattern:** ``` <resource_prefix>_<22_character_alphanumeric_string> ```  **Example:** ```json {   \"id\": \"contact_BnKjkbBBS500CoBCP0oChQ\",   \"lists\": [\"list_OcuxJHdiAvujmwQVJfd3ss\", \"list_0tOFLp5RgV7s3LNiHrjGYs\"],   \"tags\": [\"tag_UhsDkjL772Qbj5lWtT62VK\", \"tag_fL7t9lsnZ9swvx2HrtQ9wM\"] } ```  ## 📚 Resource Prefixes  | Resource | Prefix | Example | |----------|--------|---------| | Contact | `contact_` | `contact_BnKjkbBBS500CoBCP0oChQ` | | Campaign | `campaign_` | `campaign_LUE9BTxmksSmqHWbh96zsn` | | List | `list_` | `list_OcuxJHdiAvujmwQVJfd3ss` | | Tag | `tag_` | `tag_UhsDkjL772Qbj5lWtT62VK` | | Sender | `sender_` | `sender_4vK3WFhMgvOwUNyaL4QxCD` | | Template | `template_` | `template_f3lJvTEhSjKGVb5Lwc5SWS` | | Custom Field | `field_` | `field_MnuqBAG2NPLm7PZMWbjQxt` | | Webhook | `webhook_` | `webhook_9l154iiXlZoPo7vngmamee` | | Post | `post_` | `post_XyZ123aBc456DeF789GhI` | | Post Category | `post_category_` | `post_category_YzS1wOU20yw87UUHKxMzwn` | | Post Tag | `post_tag_` | `post_tag_123XyZ456AbC` | | Member | `member_` | `member_JkL012MnO345PqR678` |  ## 🎯 Best Practices  ### Error Handling - **Always check status codes**: 2xx = success, 4xx = client error, 5xx = server error - **Read error messages**: Descriptive messages help debug issues - **Handle rate limits**: Respect API rate limits for optimal performance  ### Data Validation - **Email format**: Must be valid email addresses - **Required fields**: Check documentation for mandatory fields - **Field lengths**: Respect maximum length constraints  ### Performance - **Pagination**: Use offset/limit for large datasets - **Batch operations**: Process multiple items when supported - **Caching**: Cache responses when appropriate  ## 🛠️ SDKs & Integration  Official SDKs available for: - [Golang](https://github.com/sendx/sendx-go-sdk) - [Python](https://github.com/sendx/sendx-python-sdk) - [Ruby](https://github.com/sendx/sendx-ruby-sdk) - [Java](https://github.com/sendx/sendx-java-sdk) - [PHP](https://github.com/sendx/sendx-php-sdk) - [JavaScript](https://github.com/sendx/sendx-javascript-sdk)  ## 📞 Support  Need help? Contact us: - 💬 **Website Chat**: Available on sendx.io - 📧 **Email**: hello@sendx.io - 📚 **Documentation**: Full guides at help.sendx.io  ---  **API Endpoint:** `https://api.sendx.io/api/v1/rest`  [<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://god.gw.postman.com/run-collection/33476323-44b198b0-5219-4619-a01f-cfc24d573885?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D33476323-44b198b0-5219-4619-a01f-cfc24d573885%26entityType%3Dcollection%26workspaceId%3D6b1e4f65-96a9-4136-9512-6266c852517e) 
 
 The version of the OpenAPI document: 1.0.0
-Contact: support@sendx.io
+Contact: hello@sendx.io
 Generated by: https://openapi-generator.tech
-Generator version: 7.8.0
+Generator version: 7.13.0
 
 =end
 
@@ -15,39 +15,44 @@ require 'time'
 
 module SendX
   class CustomEventRequest
-    # Name of the custom event (e.g., 'abandoned_cart').
-    attr_accessor :name
-
-    # Unique identifier for the contact (e.g., contact's email).
+    # This is the contact identifier. Contact id and email can be used interchangeably. 
     attr_accessor :identifier
 
-    # Map of property-value pairs associated with the event, where both key and value are strings.
+    # Event name
+    attr_accessor :name
+
+    # Event data
     attr_accessor :data
 
-    # Unix timestamp of when the event occurred.
+    # Unix timestamp (in seconds since January 1, 1970) representing when the event occurred.
     attr_accessor :time
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name',
         :'identifier' => :'identifier',
+        :'name' => :'name',
         :'data' => :'data',
         :'time' => :'time'
       }
     end
 
+    # Returns attribute mapping this model knows about
+    def self.acceptable_attribute_map
+      attribute_map
+    end
+
     # Returns all the JSON keys this model knows about
     def self.acceptable_attributes
-      attribute_map.values
+      acceptable_attribute_map.values
     end
 
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'name' => :'String',
         :'identifier' => :'String',
-        :'data' => :'Hash<String, String>',
+        :'name' => :'String',
+        :'data' => :'Hash<String, Object>',
         :'time' => :'Integer'
       }
     end
@@ -66,12 +71,17 @@ module SendX
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
+      acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
-        if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::CustomEventRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        if (!acceptable_attribute_map.key?(k.to_sym))
+          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::CustomEventRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'identifier')
+        self.identifier = attributes[:'identifier']
+      end
 
       if attributes.key?(:'name')
         self.name = attributes[:'name']
@@ -79,24 +89,14 @@ module SendX
         self.name = nil
       end
 
-      if attributes.key?(:'identifier')
-        self.identifier = attributes[:'identifier']
-      else
-        self.identifier = nil
-      end
-
       if attributes.key?(:'data')
         if (value = attributes[:'data']).is_a?(Hash)
           self.data = value
         end
-      else
-        self.data = nil
       end
 
       if attributes.key?(:'time')
         self.time = attributes[:'time']
-      else
-        self.time = nil
       end
     end
 
@@ -109,18 +109,6 @@ module SendX
         invalid_properties.push('invalid value for "name", name cannot be nil.')
       end
 
-      if @identifier.nil?
-        invalid_properties.push('invalid value for "identifier", identifier cannot be nil.')
-      end
-
-      if @data.nil?
-        invalid_properties.push('invalid value for "data", data cannot be nil.')
-      end
-
-      if @time.nil?
-        invalid_properties.push('invalid value for "time", time cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -129,10 +117,17 @@ module SendX
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @name.nil?
-      return false if @identifier.nil?
-      return false if @data.nil?
-      return false if @time.nil?
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] name Value to be assigned
+    def name=(name)
+      if name.nil?
+        fail ArgumentError, 'name cannot be nil'
+      end
+
+      @name = name
     end
 
     # Checks equality by comparing each attribute.
@@ -140,8 +135,8 @@ module SendX
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name &&
           identifier == o.identifier &&
+          name == o.name &&
           data == o.data &&
           time == o.time
     end
@@ -155,7 +150,7 @@ module SendX
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, identifier, data, time].hash
+      [identifier, name, data, time].hash
     end
 
     # Builds the object from hash

@@ -1,12 +1,12 @@
 =begin
 #SendX REST API
 
-## Introduction SendX is an email marketing product. It helps you convert website visitors to customers, send them promotional emails, engage with them using drip sequences and craft custom journeys using powerful but simple automations. The SendX API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. The SendX Rest API doesn’t support bulk updates. You can work on only one object per request. <br> 
+## SendX REST API Documentation  ## 🚀 Introduction  The SendX API is organized around REST principles. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.  **Key Features:** - 🔒 **Security**: Team-based authentication with optional member-level access - 🎯 **Resource-Oriented**: RESTful design with clear resource boundaries - 📊 **Rich Data Models**: Three-layer model system (Input/Output/Internal) - 🔗 **Relationships**: Automatic prefix handling for resource relationships - 📈 **Scalable**: Built for high-volume email marketing operations  ## 🏗️ Architecture Overview  SendX uses a three-layer model architecture:  1. **Input Models** (`RestE*`): For API requests 2. **Output Models** (`RestR*`): For API responses with prefixed IDs 3. **Internal Models**: Core business logic (not exposed in API)  ## 🔐 Security & Authentication  SendX uses API key authentication:  ### Team API Key ```http X-Team-ApiKey: YOUR_TEAM_API_KEY ``` - **Required for all requests** - Team-level access to resources - Available in SendX Settings → Team API Key  ## 🆔 Encrypted ID System  SendX uses encrypted IDs for security and better developer experience:  - **Internal IDs**: Sequential integers (not exposed) - **Encrypted IDs**: 22-character alphanumeric strings - **Prefixed IDs**: Resource-type prefixes in API responses (`contact_<22-char-id>`)  ### ID Format  **All resource IDs follow this pattern:** ``` <resource_prefix>_<22_character_alphanumeric_string> ```  **Example:** ```json {   \"id\": \"contact_BnKjkbBBS500CoBCP0oChQ\",   \"lists\": [\"list_OcuxJHdiAvujmwQVJfd3ss\", \"list_0tOFLp5RgV7s3LNiHrjGYs\"],   \"tags\": [\"tag_UhsDkjL772Qbj5lWtT62VK\", \"tag_fL7t9lsnZ9swvx2HrtQ9wM\"] } ```  ## 📚 Resource Prefixes  | Resource | Prefix | Example | |----------|--------|---------| | Contact | `contact_` | `contact_BnKjkbBBS500CoBCP0oChQ` | | Campaign | `campaign_` | `campaign_LUE9BTxmksSmqHWbh96zsn` | | List | `list_` | `list_OcuxJHdiAvujmwQVJfd3ss` | | Tag | `tag_` | `tag_UhsDkjL772Qbj5lWtT62VK` | | Sender | `sender_` | `sender_4vK3WFhMgvOwUNyaL4QxCD` | | Template | `template_` | `template_f3lJvTEhSjKGVb5Lwc5SWS` | | Custom Field | `field_` | `field_MnuqBAG2NPLm7PZMWbjQxt` | | Webhook | `webhook_` | `webhook_9l154iiXlZoPo7vngmamee` | | Post | `post_` | `post_XyZ123aBc456DeF789GhI` | | Post Category | `post_category_` | `post_category_YzS1wOU20yw87UUHKxMzwn` | | Post Tag | `post_tag_` | `post_tag_123XyZ456AbC` | | Member | `member_` | `member_JkL012MnO345PqR678` |  ## 🎯 Best Practices  ### Error Handling - **Always check status codes**: 2xx = success, 4xx = client error, 5xx = server error - **Read error messages**: Descriptive messages help debug issues - **Handle rate limits**: Respect API rate limits for optimal performance  ### Data Validation - **Email format**: Must be valid email addresses - **Required fields**: Check documentation for mandatory fields - **Field lengths**: Respect maximum length constraints  ### Performance - **Pagination**: Use offset/limit for large datasets - **Batch operations**: Process multiple items when supported - **Caching**: Cache responses when appropriate  ## 🛠️ SDKs & Integration  Official SDKs available for: - [Golang](https://github.com/sendx/sendx-go-sdk) - [Python](https://github.com/sendx/sendx-python-sdk) - [Ruby](https://github.com/sendx/sendx-ruby-sdk) - [Java](https://github.com/sendx/sendx-java-sdk) - [PHP](https://github.com/sendx/sendx-php-sdk) - [JavaScript](https://github.com/sendx/sendx-javascript-sdk)  ## 📞 Support  Need help? Contact us: - 💬 **Website Chat**: Available on sendx.io - 📧 **Email**: hello@sendx.io - 📚 **Documentation**: Full guides at help.sendx.io  ---  **API Endpoint:** `https://api.sendx.io/api/v1/rest`  [<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://god.gw.postman.com/run-collection/33476323-44b198b0-5219-4619-a01f-cfc24d573885?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D33476323-44b198b0-5219-4619-a01f-cfc24d573885%26entityType%3Dcollection%26workspaceId%3D6b1e4f65-96a9-4136-9512-6266c852517e) 
 
 The version of the OpenAPI document: 1.0.0
-Contact: support@sendx.io
+Contact: hello@sendx.io
 Generated by: https://openapi-generator.tech
-Generator version: 7.8.0
+Generator version: 7.13.0
 
 =end
 
@@ -19,59 +19,76 @@ module SendX
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Record a revenue event for a specific contact
-    # Records a revenue event, which can be attributed to campaigns, drips, workflows, or other sources of user interaction.
-    # @param revenue_event_request [RevenueEventRequest] 
+    # Custom Event Postback URL
+    # Register a custom event for a specific team and event.
+    # @param team_id [String] The unique identifier for the team.
+    # @param id [String] The unique sendx identifier for the contact/customer.
+    # @param event [String] The custom event name.
+    # @param any_key [String] Arbitrary custom data as key-value pairs. Add custom parameters directly to the query string.  For example, &#x60;amount&#x3D;24.43&#x60; or &#x60;currency&#x3D;USD&#x60;. 
     # @param [Hash] opts the optional parameters
-    # @return [EventResponse]
-    def create_revenue_event(revenue_event_request, opts = {})
-      data, _status_code, _headers = create_revenue_event_with_http_info(revenue_event_request, opts)
+    # @return [EventsRevenuePostbackGet200Response]
+    def events_custom_postback_get(team_id, id, event, any_key, opts = {})
+      data, _status_code, _headers = events_custom_postback_get_with_http_info(team_id, id, event, any_key, opts)
       data
     end
 
-    # Record a revenue event for a specific contact
-    # Records a revenue event, which can be attributed to campaigns, drips, workflows, or other sources of user interaction.
-    # @param revenue_event_request [RevenueEventRequest] 
+    # Custom Event Postback URL
+    # Register a custom event for a specific team and event.
+    # @param team_id [String] The unique identifier for the team.
+    # @param id [String] The unique sendx identifier for the contact/customer.
+    # @param event [String] The custom event name.
+    # @param any_key [String] Arbitrary custom data as key-value pairs. Add custom parameters directly to the query string.  For example, &#x60;amount&#x3D;24.43&#x60; or &#x60;currency&#x3D;USD&#x60;. 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(EventResponse, Integer, Hash)>] EventResponse data, response status code and response headers
-    def create_revenue_event_with_http_info(revenue_event_request, opts = {})
+    # @return [Array<(EventsRevenuePostbackGet200Response, Integer, Hash)>] EventsRevenuePostbackGet200Response data, response status code and response headers
+    def events_custom_postback_get_with_http_info(team_id, id, event, any_key, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: EventApi.create_revenue_event ...'
+        @api_client.config.logger.debug 'Calling API: EventApi.events_custom_postback_get ...'
       end
-      # verify the required parameter 'revenue_event_request' is set
-      if @api_client.config.client_side_validation && revenue_event_request.nil?
-        fail ArgumentError, "Missing the required parameter 'revenue_event_request' when calling EventApi.create_revenue_event"
+      # verify the required parameter 'team_id' is set
+      if @api_client.config.client_side_validation && team_id.nil?
+        fail ArgumentError, "Missing the required parameter 'team_id' when calling EventApi.events_custom_postback_get"
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling EventApi.events_custom_postback_get"
+      end
+      # verify the required parameter 'event' is set
+      if @api_client.config.client_side_validation && event.nil?
+        fail ArgumentError, "Missing the required parameter 'event' when calling EventApi.events_custom_postback_get"
+      end
+      # verify the required parameter 'any_key' is set
+      if @api_client.config.client_side_validation && any_key.nil?
+        fail ArgumentError, "Missing the required parameter 'any_key' when calling EventApi.events_custom_postback_get"
       end
       # resource path
-      local_var_path = '/events/revenue'
+      local_var_path = '/events/custom/postback'
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'team_id'] = team_id
+      query_params[:'id'] = id
+      query_params[:'event'] = event
+      query_params[:'any-key'] = any_key
 
       # header parameters
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-          header_params['Content-Type'] = content_type
-      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(revenue_event_request)
+      post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'EventResponse'
+      return_type = opts[:debug_return_type] || 'EventsRevenuePostbackGet200Response'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
-        :operation => :"EventApi.create_revenue_event",
+        :operation => :"EventApi.events_custom_postback_get",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -80,66 +97,83 @@ module SendX
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: EventApi#create_revenue_event\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: EventApi#events_custom_postback_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
-    # Push a custom event associated with a contact
-    # Pushes a custom event with properties and values for a specified contact.
-    # @param custom_event_request [CustomEventRequest] 
+    # Revenue Event Postback URL
+    # Trigger a revenue postback for a specific team and event.
+    # @param team_id [String] The unique identifier for the team.
+    # @param id [String] The unique sendx identifier for the contact/customer.
+    # @param amount [Float] The revenue amount to be posted back.
+    # @param campaign_id [String] The unique identifier for the campaign.
     # @param [Hash] opts the optional parameters
-    # @return [EventResponse]
-    def push_custom_event(custom_event_request, opts = {})
-      data, _status_code, _headers = push_custom_event_with_http_info(custom_event_request, opts)
+    # @return [EventsRevenuePostbackGet200Response]
+    def events_revenue_postback_get(team_id, id, amount, campaign_id, opts = {})
+      data, _status_code, _headers = events_revenue_postback_get_with_http_info(team_id, id, amount, campaign_id, opts)
       data
     end
 
-    # Push a custom event associated with a contact
-    # Pushes a custom event with properties and values for a specified contact.
-    # @param custom_event_request [CustomEventRequest] 
+    # Revenue Event Postback URL
+    # Trigger a revenue postback for a specific team and event.
+    # @param team_id [String] The unique identifier for the team.
+    # @param id [String] The unique sendx identifier for the contact/customer.
+    # @param amount [Float] The revenue amount to be posted back.
+    # @param campaign_id [String] The unique identifier for the campaign.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(EventResponse, Integer, Hash)>] EventResponse data, response status code and response headers
-    def push_custom_event_with_http_info(custom_event_request, opts = {})
+    # @return [Array<(EventsRevenuePostbackGet200Response, Integer, Hash)>] EventsRevenuePostbackGet200Response data, response status code and response headers
+    def events_revenue_postback_get_with_http_info(team_id, id, amount, campaign_id, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: EventApi.push_custom_event ...'
+        @api_client.config.logger.debug 'Calling API: EventApi.events_revenue_postback_get ...'
       end
-      # verify the required parameter 'custom_event_request' is set
-      if @api_client.config.client_side_validation && custom_event_request.nil?
-        fail ArgumentError, "Missing the required parameter 'custom_event_request' when calling EventApi.push_custom_event"
+      # verify the required parameter 'team_id' is set
+      if @api_client.config.client_side_validation && team_id.nil?
+        fail ArgumentError, "Missing the required parameter 'team_id' when calling EventApi.events_revenue_postback_get"
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling EventApi.events_revenue_postback_get"
+      end
+      # verify the required parameter 'amount' is set
+      if @api_client.config.client_side_validation && amount.nil?
+        fail ArgumentError, "Missing the required parameter 'amount' when calling EventApi.events_revenue_postback_get"
+      end
+      # verify the required parameter 'campaign_id' is set
+      if @api_client.config.client_side_validation && campaign_id.nil?
+        fail ArgumentError, "Missing the required parameter 'campaign_id' when calling EventApi.events_revenue_postback_get"
       end
       # resource path
-      local_var_path = '/events/custom'
+      local_var_path = '/events/revenue/postback'
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'team_id'] = team_id
+      query_params[:'id'] = id
+      query_params[:'amount'] = amount
+      query_params[:'campaign_id'] = campaign_id
 
       # header parameters
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-          header_params['Content-Type'] = content_type
-      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(custom_event_request)
+      post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'EventResponse'
+      return_type = opts[:debug_return_type] || 'EventsRevenuePostbackGet200Response'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
-        :operation => :"EventApi.push_custom_event",
+        :operation => :"EventApi.events_revenue_postback_get",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -148,9 +182,9 @@ module SendX
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: EventApi#push_custom_event\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: EventApi#events_revenue_postback_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

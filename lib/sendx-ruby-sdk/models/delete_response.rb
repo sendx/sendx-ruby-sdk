@@ -1,12 +1,12 @@
 =begin
 #SendX REST API
 
-## Introduction SendX is an email marketing product. It helps you convert website visitors to customers, send them promotional emails, engage with them using drip sequences and craft custom journeys using powerful but simple automations. The SendX API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. The SendX Rest API doesn’t support bulk updates. You can work on only one object per request. <br> 
+## SendX REST API Documentation  ## 🚀 Introduction  The SendX API is organized around REST principles. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.  **Key Features:** - 🔒 **Security**: Team-based authentication with optional member-level access - 🎯 **Resource-Oriented**: RESTful design with clear resource boundaries - 📊 **Rich Data Models**: Three-layer model system (Input/Output/Internal) - 🔗 **Relationships**: Automatic prefix handling for resource relationships - 📈 **Scalable**: Built for high-volume email marketing operations  ## 🏗️ Architecture Overview  SendX uses a three-layer model architecture:  1. **Input Models** (`RestE*`): For API requests 2. **Output Models** (`RestR*`): For API responses with prefixed IDs 3. **Internal Models**: Core business logic (not exposed in API)  ## 🔐 Security & Authentication  SendX uses API key authentication:  ### Team API Key ```http X-Team-ApiKey: YOUR_TEAM_API_KEY ``` - **Required for all requests** - Team-level access to resources - Available in SendX Settings → Team API Key  ## 🆔 Encrypted ID System  SendX uses encrypted IDs for security and better developer experience:  - **Internal IDs**: Sequential integers (not exposed) - **Encrypted IDs**: 22-character alphanumeric strings - **Prefixed IDs**: Resource-type prefixes in API responses (`contact_<22-char-id>`)  ### ID Format  **All resource IDs follow this pattern:** ``` <resource_prefix>_<22_character_alphanumeric_string> ```  **Example:** ```json {   \"id\": \"contact_BnKjkbBBS500CoBCP0oChQ\",   \"lists\": [\"list_OcuxJHdiAvujmwQVJfd3ss\", \"list_0tOFLp5RgV7s3LNiHrjGYs\"],   \"tags\": [\"tag_UhsDkjL772Qbj5lWtT62VK\", \"tag_fL7t9lsnZ9swvx2HrtQ9wM\"] } ```  ## 📚 Resource Prefixes  | Resource | Prefix | Example | |----------|--------|---------| | Contact | `contact_` | `contact_BnKjkbBBS500CoBCP0oChQ` | | Campaign | `campaign_` | `campaign_LUE9BTxmksSmqHWbh96zsn` | | List | `list_` | `list_OcuxJHdiAvujmwQVJfd3ss` | | Tag | `tag_` | `tag_UhsDkjL772Qbj5lWtT62VK` | | Sender | `sender_` | `sender_4vK3WFhMgvOwUNyaL4QxCD` | | Template | `template_` | `template_f3lJvTEhSjKGVb5Lwc5SWS` | | Custom Field | `field_` | `field_MnuqBAG2NPLm7PZMWbjQxt` | | Webhook | `webhook_` | `webhook_9l154iiXlZoPo7vngmamee` | | Post | `post_` | `post_XyZ123aBc456DeF789GhI` | | Post Category | `post_category_` | `post_category_YzS1wOU20yw87UUHKxMzwn` | | Post Tag | `post_tag_` | `post_tag_123XyZ456AbC` | | Member | `member_` | `member_JkL012MnO345PqR678` |  ## 🎯 Best Practices  ### Error Handling - **Always check status codes**: 2xx = success, 4xx = client error, 5xx = server error - **Read error messages**: Descriptive messages help debug issues - **Handle rate limits**: Respect API rate limits for optimal performance  ### Data Validation - **Email format**: Must be valid email addresses - **Required fields**: Check documentation for mandatory fields - **Field lengths**: Respect maximum length constraints  ### Performance - **Pagination**: Use offset/limit for large datasets - **Batch operations**: Process multiple items when supported - **Caching**: Cache responses when appropriate  ## 🛠️ SDKs & Integration  Official SDKs available for: - [Golang](https://github.com/sendx/sendx-go-sdk) - [Python](https://github.com/sendx/sendx-python-sdk) - [Ruby](https://github.com/sendx/sendx-ruby-sdk) - [Java](https://github.com/sendx/sendx-java-sdk) - [PHP](https://github.com/sendx/sendx-php-sdk) - [JavaScript](https://github.com/sendx/sendx-javascript-sdk)  ## 📞 Support  Need help? Contact us: - 💬 **Website Chat**: Available on sendx.io - 📧 **Email**: hello@sendx.io - 📚 **Documentation**: Full guides at help.sendx.io  ---  **API Endpoint:** `https://api.sendx.io/api/v1/rest`  [<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://god.gw.postman.com/run-collection/33476323-44b198b0-5219-4619-a01f-cfc24d573885?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D33476323-44b198b0-5219-4619-a01f-cfc24d573885%26entityType%3Dcollection%26workspaceId%3D6b1e4f65-96a9-4136-9512-6266c852517e) 
 
 The version of the OpenAPI document: 1.0.0
-Contact: support@sendx.io
+Contact: hello@sendx.io
 Generated by: https://openapi-generator.tech
-Generator version: 7.8.0
+Generator version: 7.13.0
 
 =end
 
@@ -15,27 +15,54 @@ require 'time'
 
 module SendX
   class DeleteResponse
-    attr_accessor :id
+    attr_accessor :status
 
     attr_accessor :message
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
+        :'status' => :'status',
         :'message' => :'message'
       }
     end
 
+    # Returns attribute mapping this model knows about
+    def self.acceptable_attribute_map
+      attribute_map
+    end
+
     # Returns all the JSON keys this model knows about
     def self.acceptable_attributes
-      attribute_map.values
+      acceptable_attribute_map.values
     end
 
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
+        :'status' => :'String',
         :'message' => :'String'
       }
     end
@@ -54,19 +81,24 @@ module SendX
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
+      acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
-        if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::DeleteResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        if (!acceptable_attribute_map.key?(k.to_sym))
+          fail ArgumentError, "`#{k}` is not a valid attribute in `SendX::DeleteResponse`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'status')
+        self.status = attributes[:'status']
+      else
+        self.status = nil
       end
 
       if attributes.key?(:'message')
         self.message = attributes[:'message']
+      else
+        self.message = nil
       end
     end
 
@@ -75,6 +107,14 @@ module SendX
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @status.nil?
+        invalid_properties.push('invalid value for "status", status cannot be nil.')
+      end
+
+      if @message.nil?
+        invalid_properties.push('invalid value for "message", message cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -82,7 +122,31 @@ module SendX
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @status.nil?
+      status_validator = EnumAttributeValidator.new('String', ["success"])
+      return false unless status_validator.valid?(@status)
+      return false if @message.nil?
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] status Object to be assigned
+    def status=(status)
+      validator = EnumAttributeValidator.new('String', ["success"])
+      unless validator.valid?(status)
+        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
+      end
+      @status = status
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] message Value to be assigned
+    def message=(message)
+      if message.nil?
+        fail ArgumentError, 'message cannot be nil'
+      end
+
+      @message = message
     end
 
     # Checks equality by comparing each attribute.
@@ -90,7 +154,7 @@ module SendX
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
+          status == o.status &&
           message == o.message
     end
 
@@ -103,7 +167,7 @@ module SendX
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, message].hash
+      [status, message].hash
     end
 
     # Builds the object from hash

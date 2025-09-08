@@ -4,8 +4,8 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **id** | **String** |  | [optional] |
-| **message** | **String** |  | [optional] |
+| **status** | **String** |  |  |
+| **message** | **String** |  |  |
 
 ## Example
 
@@ -13,8 +13,8 @@
 require 'sendx-ruby-sdk'
 
 instance = SendX::DeleteResponse.new(
-  id: sendx123,
-  message: Resource (name) has been deleted successfully.
+  status: success,
+  message: Resource deleted successfully
 )
 ```
 

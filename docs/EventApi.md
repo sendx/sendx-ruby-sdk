@@ -4,17 +4,17 @@ All URIs are relative to *https://api.sendx.io/api/v1/rest*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**create_revenue_event**](EventApi.md#create_revenue_event) | **POST** /events/revenue | Record a revenue event for a specific contact |
-| [**push_custom_event**](EventApi.md#push_custom_event) | **POST** /events/custom | Push a custom event associated with a contact |
+| [**events_custom_postback_get**](EventApi.md#events_custom_postback_get) | **GET** /events/custom/postback | Custom Event Postback URL |
+| [**events_revenue_postback_get**](EventApi.md#events_revenue_postback_get) | **GET** /events/revenue/postback | Revenue Event Postback URL |
 
 
-## create_revenue_event
+## events_custom_postback_get
 
-> <EventResponse> create_revenue_event(revenue_event_request)
+> <EventsRevenuePostbackGet200Response> events_custom_postback_get(team_id, id, event, any_key)
 
-Record a revenue event for a specific contact
+Custom Event Postback URL
 
-Records a revenue event, which can be attributed to campaigns, drips, workflows, or other sources of user interaction.
+Register a custom event for a specific team and event.
 
 ### Examples
 
@@ -23,39 +23,42 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::EventApi.new
-revenue_event_request = SendX::RevenueEventRequest.new({identifier: 'john.doe@example.com', amount: 123.23, currency: 'INR', source: 'app', time: 1669990400}) # RevenueEventRequest | 
+team_id = 'team_id_example' # String | The unique identifier for the team.
+id = 'id_example' # String | The unique sendx identifier for the contact/customer.
+event = 'event_example' # String | The custom event name.
+any_key = '24.43' # String | Arbitrary custom data as key-value pairs. Add custom parameters directly to the query string.  For example, `amount=24.43` or `currency=USD`. 
 
 begin
-  # Record a revenue event for a specific contact
-  result = api_instance.create_revenue_event(revenue_event_request)
+  # Custom Event Postback URL
+  result = api_instance.events_custom_postback_get(team_id, id, event, any_key)
   p result
 rescue SendX::ApiError => e
-  puts "Error when calling EventApi->create_revenue_event: #{e}"
+  puts "Error when calling EventApi->events_custom_postback_get: #{e}"
 end
 ```
 
-#### Using the create_revenue_event_with_http_info variant
+#### Using the events_custom_postback_get_with_http_info variant
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<EventResponse>, Integer, Hash)> create_revenue_event_with_http_info(revenue_event_request)
+> <Array(<EventsRevenuePostbackGet200Response>, Integer, Hash)> events_custom_postback_get_with_http_info(team_id, id, event, any_key)
 
 ```ruby
 begin
-  # Record a revenue event for a specific contact
-  data, status_code, headers = api_instance.create_revenue_event_with_http_info(revenue_event_request)
+  # Custom Event Postback URL
+  data, status_code, headers = api_instance.events_custom_postback_get_with_http_info(team_id, id, event, any_key)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <EventResponse>
+  p data # => <EventsRevenuePostbackGet200Response>
 rescue SendX::ApiError => e
-  puts "Error when calling EventApi->create_revenue_event_with_http_info: #{e}"
+  puts "Error when calling EventApi->events_custom_postback_get_with_http_info: #{e}"
 end
 ```
 
@@ -63,29 +66,32 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **revenue_event_request** | [**RevenueEventRequest**](RevenueEventRequest.md) |  |  |
+| **team_id** | **String** | The unique identifier for the team. |  |
+| **id** | **String** | The unique sendx identifier for the contact/customer. |  |
+| **event** | **String** | The custom event name. |  |
+| **any_key** | **String** | Arbitrary custom data as key-value pairs. Add custom parameters directly to the query string.  For example, &#x60;amount&#x3D;24.43&#x60; or &#x60;currency&#x3D;USD&#x60;.  |  |
 
 ### Return type
 
-[**EventResponse**](EventResponse.md)
+[**EventsRevenuePostbackGet200Response**](EventsRevenuePostbackGet200Response.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 
-## push_custom_event
+## events_revenue_postback_get
 
-> <EventResponse> push_custom_event(custom_event_request)
+> <EventsRevenuePostbackGet200Response> events_revenue_postback_get(team_id, id, amount, campaign_id)
 
-Push a custom event associated with a contact
+Revenue Event Postback URL
 
-Pushes a custom event with properties and values for a specified contact.
+Trigger a revenue postback for a specific team and event.
 
 ### Examples
 
@@ -94,39 +100,42 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::EventApi.new
-custom_event_request = SendX::CustomEventRequest.new({name: 'abandoned_cart', identifier: 'john.doe@example.com', data: { key: 'inner_example'}, time: 1669990400}) # CustomEventRequest | 
+team_id = 'team_id_example' # String | The unique identifier for the team.
+id = 'id_example' # String | The unique sendx identifier for the contact/customer.
+amount = 3.4 # Float | The revenue amount to be posted back.
+campaign_id = 'campaign_id_example' # String | The unique identifier for the campaign.
 
 begin
-  # Push a custom event associated with a contact
-  result = api_instance.push_custom_event(custom_event_request)
+  # Revenue Event Postback URL
+  result = api_instance.events_revenue_postback_get(team_id, id, amount, campaign_id)
   p result
 rescue SendX::ApiError => e
-  puts "Error when calling EventApi->push_custom_event: #{e}"
+  puts "Error when calling EventApi->events_revenue_postback_get: #{e}"
 end
 ```
 
-#### Using the push_custom_event_with_http_info variant
+#### Using the events_revenue_postback_get_with_http_info variant
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<EventResponse>, Integer, Hash)> push_custom_event_with_http_info(custom_event_request)
+> <Array(<EventsRevenuePostbackGet200Response>, Integer, Hash)> events_revenue_postback_get_with_http_info(team_id, id, amount, campaign_id)
 
 ```ruby
 begin
-  # Push a custom event associated with a contact
-  data, status_code, headers = api_instance.push_custom_event_with_http_info(custom_event_request)
+  # Revenue Event Postback URL
+  data, status_code, headers = api_instance.events_revenue_postback_get_with_http_info(team_id, id, amount, campaign_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <EventResponse>
+  p data # => <EventsRevenuePostbackGet200Response>
 rescue SendX::ApiError => e
-  puts "Error when calling EventApi->push_custom_event_with_http_info: #{e}"
+  puts "Error when calling EventApi->events_revenue_postback_get_with_http_info: #{e}"
 end
 ```
 
@@ -134,18 +143,21 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **custom_event_request** | [**CustomEventRequest**](CustomEventRequest.md) |  |  |
+| **team_id** | **String** | The unique identifier for the team. |  |
+| **id** | **String** | The unique sendx identifier for the contact/customer. |  |
+| **amount** | **Float** | The revenue amount to be posted back. |  |
+| **campaign_id** | **String** | The unique identifier for the campaign. |  |
 
 ### Return type
 
-[**EventResponse**](EventResponse.md)
+[**EventsRevenuePostbackGet200Response**](EventsRevenuePostbackGet200Response.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 

@@ -1,12 +1,12 @@
 =begin
 #SendX REST API
 
-## Introduction SendX is an email marketing product. It helps you convert website visitors to customers, send them promotional emails, engage with them using drip sequences and craft custom journeys using powerful but simple automations. The SendX API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. The SendX Rest API doesn’t support bulk updates. You can work on only one object per request. <br> 
+## SendX REST API Documentation  ## 🚀 Introduction  The SendX API is organized around REST principles. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.  **Key Features:** - 🔒 **Security**: Team-based authentication with optional member-level access - 🎯 **Resource-Oriented**: RESTful design with clear resource boundaries - 📊 **Rich Data Models**: Three-layer model system (Input/Output/Internal) - 🔗 **Relationships**: Automatic prefix handling for resource relationships - 📈 **Scalable**: Built for high-volume email marketing operations  ## 🏗️ Architecture Overview  SendX uses a three-layer model architecture:  1. **Input Models** (`RestE*`): For API requests 2. **Output Models** (`RestR*`): For API responses with prefixed IDs 3. **Internal Models**: Core business logic (not exposed in API)  ## 🔐 Security & Authentication  SendX uses API key authentication:  ### Team API Key ```http X-Team-ApiKey: YOUR_TEAM_API_KEY ``` - **Required for all requests** - Team-level access to resources - Available in SendX Settings → Team API Key  ## 🆔 Encrypted ID System  SendX uses encrypted IDs for security and better developer experience:  - **Internal IDs**: Sequential integers (not exposed) - **Encrypted IDs**: 22-character alphanumeric strings - **Prefixed IDs**: Resource-type prefixes in API responses (`contact_<22-char-id>`)  ### ID Format  **All resource IDs follow this pattern:** ``` <resource_prefix>_<22_character_alphanumeric_string> ```  **Example:** ```json {   \"id\": \"contact_BnKjkbBBS500CoBCP0oChQ\",   \"lists\": [\"list_OcuxJHdiAvujmwQVJfd3ss\", \"list_0tOFLp5RgV7s3LNiHrjGYs\"],   \"tags\": [\"tag_UhsDkjL772Qbj5lWtT62VK\", \"tag_fL7t9lsnZ9swvx2HrtQ9wM\"] } ```  ## 📚 Resource Prefixes  | Resource | Prefix | Example | |----------|--------|---------| | Contact | `contact_` | `contact_BnKjkbBBS500CoBCP0oChQ` | | Campaign | `campaign_` | `campaign_LUE9BTxmksSmqHWbh96zsn` | | List | `list_` | `list_OcuxJHdiAvujmwQVJfd3ss` | | Tag | `tag_` | `tag_UhsDkjL772Qbj5lWtT62VK` | | Sender | `sender_` | `sender_4vK3WFhMgvOwUNyaL4QxCD` | | Template | `template_` | `template_f3lJvTEhSjKGVb5Lwc5SWS` | | Custom Field | `field_` | `field_MnuqBAG2NPLm7PZMWbjQxt` | | Webhook | `webhook_` | `webhook_9l154iiXlZoPo7vngmamee` | | Post | `post_` | `post_XyZ123aBc456DeF789GhI` | | Post Category | `post_category_` | `post_category_YzS1wOU20yw87UUHKxMzwn` | | Post Tag | `post_tag_` | `post_tag_123XyZ456AbC` | | Member | `member_` | `member_JkL012MnO345PqR678` |  ## 🎯 Best Practices  ### Error Handling - **Always check status codes**: 2xx = success, 4xx = client error, 5xx = server error - **Read error messages**: Descriptive messages help debug issues - **Handle rate limits**: Respect API rate limits for optimal performance  ### Data Validation - **Email format**: Must be valid email addresses - **Required fields**: Check documentation for mandatory fields - **Field lengths**: Respect maximum length constraints  ### Performance - **Pagination**: Use offset/limit for large datasets - **Batch operations**: Process multiple items when supported - **Caching**: Cache responses when appropriate  ## 🛠️ SDKs & Integration  Official SDKs available for: - [Golang](https://github.com/sendx/sendx-go-sdk) - [Python](https://github.com/sendx/sendx-python-sdk) - [Ruby](https://github.com/sendx/sendx-ruby-sdk) - [Java](https://github.com/sendx/sendx-java-sdk) - [PHP](https://github.com/sendx/sendx-php-sdk) - [JavaScript](https://github.com/sendx/sendx-javascript-sdk)  ## 📞 Support  Need help? Contact us: - 💬 **Website Chat**: Available on sendx.io - 📧 **Email**: hello@sendx.io - 📚 **Documentation**: Full guides at help.sendx.io  ---  **API Endpoint:** `https://api.sendx.io/api/v1/rest`  [<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://god.gw.postman.com/run-collection/33476323-44b198b0-5219-4619-a01f-cfc24d573885?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D33476323-44b198b0-5219-4619-a01f-cfc24d573885%26entityType%3Dcollection%26workspaceId%3D6b1e4f65-96a9-4136-9512-6266c852517e) 
 
 The version of the OpenAPI document: 1.0.0
-Contact: support@sendx.io
+Contact: hello@sendx.io
 Generated by: https://openapi-generator.tech
-Generator version: 7.8.0
+Generator version: 7.13.0
 
 =end
 
@@ -19,28 +19,28 @@ module SendX
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create List
-    # Create a new list.
-    # @param list_request [ListRequest] 
+    # Create list
+    # Creates a new contact list. 
+    # @param rest_e_list [RestEList] 
     # @param [Hash] opts the optional parameters
-    # @return [CreateResponse]
-    def create_list(list_request, opts = {})
-      data, _status_code, _headers = create_list_with_http_info(list_request, opts)
+    # @return [RestRList]
+    def create_list(rest_e_list, opts = {})
+      data, _status_code, _headers = create_list_with_http_info(rest_e_list, opts)
       data
     end
 
-    # Create List
-    # Create a new list.
-    # @param list_request [ListRequest] 
+    # Create list
+    # Creates a new contact list. 
+    # @param rest_e_list [RestEList] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateResponse, Integer, Hash)>] CreateResponse data, response status code and response headers
-    def create_list_with_http_info(list_request, opts = {})
+    # @return [Array<(RestRList, Integer, Hash)>] RestRList data, response status code and response headers
+    def create_list_with_http_info(rest_e_list, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ListApi.create_list ...'
       end
-      # verify the required parameter 'list_request' is set
-      if @api_client.config.client_side_validation && list_request.nil?
-        fail ArgumentError, "Missing the required parameter 'list_request' when calling ListApi.create_list"
+      # verify the required parameter 'rest_e_list' is set
+      if @api_client.config.client_side_validation && rest_e_list.nil?
+        fail ArgumentError, "Missing the required parameter 'rest_e_list' when calling ListApi.create_list"
       end
       # resource path
       local_var_path = '/list'
@@ -62,13 +62,13 @@ module SendX
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(list_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(rest_e_list)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateResponse'
+      return_type = opts[:debug_return_type] || 'RestRList'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ListApi.create_list",
@@ -87,31 +87,36 @@ module SendX
       return data, status_code, headers
     end
 
-    # Delete List
-    # Deletes a specific list by its ID.
-    # @param list_id [String] The ID of the list you want to delete
+    # Delete list
+    # Deletes a list. 
+    # @param identifier [String] List identifier to delete
     # @param [Hash] opts the optional parameters
     # @return [DeleteResponse]
-    def delete_list(list_id, opts = {})
-      data, _status_code, _headers = delete_list_with_http_info(list_id, opts)
+    def delete_list(identifier, opts = {})
+      data, _status_code, _headers = delete_list_with_http_info(identifier, opts)
       data
     end
 
-    # Delete List
-    # Deletes a specific list by its ID.
-    # @param list_id [String] The ID of the list you want to delete
+    # Delete list
+    # Deletes a list. 
+    # @param identifier [String] List identifier to delete
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
-    def delete_list_with_http_info(list_id, opts = {})
+    def delete_list_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ListApi.delete_list ...'
       end
-      # verify the required parameter 'list_id' is set
-      if @api_client.config.client_side_validation && list_id.nil?
-        fail ArgumentError, "Missing the required parameter 'list_id' when calling ListApi.delete_list"
+      # verify the required parameter 'identifier' is set
+      if @api_client.config.client_side_validation && identifier.nil?
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ListApi.delete_list"
       end
+      pattern = Regexp.new(/^(list_)?[a-zA-Z0-9]{22}$/)
+      if @api_client.config.client_side_validation && identifier !~ pattern
+        fail ArgumentError, "invalid value for 'identifier' when calling ListApi.delete_list, must conform to the pattern #{pattern}."
+      end
+
       # resource path
-      local_var_path = '/list/{listId}'.sub('{' + 'listId' + '}', CGI.escape(list_id.to_s))
+      local_var_path = '/list/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -131,7 +136,7 @@ module SendX
       return_type = opts[:debug_return_type] || 'DeleteResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ListApi.delete_list",
@@ -150,29 +155,49 @@ module SendX
       return data, status_code, headers
     end
 
-    # Get All Lists
-    # Retrieve all lists for the account.
+    # Get all lists
+    # Retrieves all contact lists in your team. 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :offset Offset for pagination.
-    # @option opts [Integer] :limit Limit the number of results returned.
-    # @option opts [String] :search Search term to filter lists.
-    # @return [Array<ListModel>]
+    # @option opts [Integer] :offset Number of records to skip for pagination (default to 0)
+    # @option opts [Integer] :limit Maximum number of lists to return (max: 500) (default to 10)
+    # @option opts [String] :search Search lists by name
+    # @return [Array<RestRList>]
     def get_all_lists(opts = {})
       data, _status_code, _headers = get_all_lists_with_http_info(opts)
       data
     end
 
-    # Get All Lists
-    # Retrieve all lists for the account.
+    # Get all lists
+    # Retrieves all contact lists in your team. 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :offset Offset for pagination.
-    # @option opts [Integer] :limit Limit the number of results returned.
-    # @option opts [String] :search Search term to filter lists.
-    # @return [Array<(Array<ListModel>, Integer, Hash)>] Array<ListModel> data, response status code and response headers
+    # @option opts [Integer] :offset Number of records to skip for pagination (default to 0)
+    # @option opts [Integer] :limit Maximum number of lists to return (max: 500) (default to 10)
+    # @option opts [String] :search Search lists by name
+    # @return [Array<(Array<RestRList>, Integer, Hash)>] Array<RestRList> data, response status code and response headers
     def get_all_lists_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ListApi.get_all_lists ...'
       end
+      if @api_client.config.client_side_validation && !opts[:'offset'].nil? && opts[:'offset'] < 0
+        fail ArgumentError, 'invalid value for "opts[:"offset"]" when calling ListApi.get_all_lists, must be greater than or equal to 0.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 100
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ListApi.get_all_lists, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ListApi.get_all_lists, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'search'].nil? && opts[:'search'].to_s.length > 100
+        fail ArgumentError, 'invalid value for "opts[:"search"]" when calling ListApi.get_all_lists, the character length must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'search'].nil? && opts[:'search'].to_s.length < 2
+        fail ArgumentError, 'invalid value for "opts[:"search"]" when calling ListApi.get_all_lists, the character length must be great than or equal to 2.'
+      end
+
       # resource path
       local_var_path = '/list'
 
@@ -194,10 +219,10 @@ module SendX
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Array<ListModel>'
+      return_type = opts[:debug_return_type] || 'Array<RestRList>'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ListApi.get_all_lists",
@@ -216,31 +241,36 @@ module SendX
       return data, status_code, headers
     end
 
-    # Get List
-    # Retrieve a specific list by its ID.
-    # @param list_id [String] The ID of the list you want to retrieve
+    # Get list by ID
+    # Retrieves detailed information about a specific list. 
+    # @param identifier [String] List identifier - &#x60;list_OcuxJHdiAvujmwQVJfd3ss&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [ListModel]
-    def get_list_by_id(list_id, opts = {})
-      data, _status_code, _headers = get_list_by_id_with_http_info(list_id, opts)
+    # @return [RestRList]
+    def get_list(identifier, opts = {})
+      data, _status_code, _headers = get_list_with_http_info(identifier, opts)
       data
     end
 
-    # Get List
-    # Retrieve a specific list by its ID.
-    # @param list_id [String] The ID of the list you want to retrieve
+    # Get list by ID
+    # Retrieves detailed information about a specific list. 
+    # @param identifier [String] List identifier - &#x60;list_OcuxJHdiAvujmwQVJfd3ss&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(ListModel, Integer, Hash)>] ListModel data, response status code and response headers
-    def get_list_by_id_with_http_info(list_id, opts = {})
+    # @return [Array<(RestRList, Integer, Hash)>] RestRList data, response status code and response headers
+    def get_list_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: ListApi.get_list_by_id ...'
+        @api_client.config.logger.debug 'Calling API: ListApi.get_list ...'
       end
-      # verify the required parameter 'list_id' is set
-      if @api_client.config.client_side_validation && list_id.nil?
-        fail ArgumentError, "Missing the required parameter 'list_id' when calling ListApi.get_list_by_id"
+      # verify the required parameter 'identifier' is set
+      if @api_client.config.client_side_validation && identifier.nil?
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ListApi.get_list"
       end
+      pattern = Regexp.new(/^(list_)?[a-zA-Z0-9]{22}$/)
+      if @api_client.config.client_side_validation && identifier !~ pattern
+        fail ArgumentError, "invalid value for 'identifier' when calling ListApi.get_list, must conform to the pattern #{pattern}."
+      end
+
       # resource path
-      local_var_path = '/list/{listId}'.sub('{' + 'listId' + '}', CGI.escape(list_id.to_s))
+      local_var_path = '/list/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -257,13 +287,13 @@ module SendX
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'ListModel'
+      return_type = opts[:debug_return_type] || 'RestRList'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
-        :operation => :"ListApi.get_list_by_id",
+        :operation => :"ListApi.get_list",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -274,42 +304,47 @@ module SendX
 
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: ListApi#get_list_by_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: ListApi#get_list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
-    # Update List
-    # Update an existing list by its ID.
-    # @param list_request [ListRequest] 
-    # @param list_id [String] The ID of the list to be updated.
+    # Update list
+    # Updates an existing list's settings. 
+    # @param rest_e_list [RestEList] 
+    # @param identifier [String] List identifier to update
     # @param [Hash] opts the optional parameters
-    # @return [Response]
-    def update_list(list_request, list_id, opts = {})
-      data, _status_code, _headers = update_list_with_http_info(list_request, list_id, opts)
+    # @return [RestRList]
+    def update_list(rest_e_list, identifier, opts = {})
+      data, _status_code, _headers = update_list_with_http_info(rest_e_list, identifier, opts)
       data
     end
 
-    # Update List
-    # Update an existing list by its ID.
-    # @param list_request [ListRequest] 
-    # @param list_id [String] The ID of the list to be updated.
+    # Update list
+    # Updates an existing list&#39;s settings. 
+    # @param rest_e_list [RestEList] 
+    # @param identifier [String] List identifier to update
     # @param [Hash] opts the optional parameters
-    # @return [Array<(Response, Integer, Hash)>] Response data, response status code and response headers
-    def update_list_with_http_info(list_request, list_id, opts = {})
+    # @return [Array<(RestRList, Integer, Hash)>] RestRList data, response status code and response headers
+    def update_list_with_http_info(rest_e_list, identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ListApi.update_list ...'
       end
-      # verify the required parameter 'list_request' is set
-      if @api_client.config.client_side_validation && list_request.nil?
-        fail ArgumentError, "Missing the required parameter 'list_request' when calling ListApi.update_list"
+      # verify the required parameter 'rest_e_list' is set
+      if @api_client.config.client_side_validation && rest_e_list.nil?
+        fail ArgumentError, "Missing the required parameter 'rest_e_list' when calling ListApi.update_list"
       end
-      # verify the required parameter 'list_id' is set
-      if @api_client.config.client_side_validation && list_id.nil?
-        fail ArgumentError, "Missing the required parameter 'list_id' when calling ListApi.update_list"
+      # verify the required parameter 'identifier' is set
+      if @api_client.config.client_side_validation && identifier.nil?
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ListApi.update_list"
       end
+      pattern = Regexp.new(/^(list_)?[a-zA-Z0-9]{22}$/)
+      if @api_client.config.client_side_validation && identifier !~ pattern
+        fail ArgumentError, "invalid value for 'identifier' when calling ListApi.update_list, must conform to the pattern #{pattern}."
+      end
+
       # resource path
-      local_var_path = '/list/{listId}'.sub('{' + 'listId' + '}', CGI.escape(list_id.to_s))
+      local_var_path = '/list/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -328,13 +363,13 @@ module SendX
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(list_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(rest_e_list)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Response'
+      return_type = opts[:debug_return_type] || 'RestRList'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ListApi.update_list",

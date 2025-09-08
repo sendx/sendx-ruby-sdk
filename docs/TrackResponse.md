@@ -13,8 +13,8 @@
 require 'sendx-ruby-sdk'
 
 instance = SendX::TrackResponse.new(
-  status: null,
-  message: null
+  status: 200,
+  message: OK
 )
 ```
 

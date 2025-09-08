@@ -4,9 +4,9 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **email** | **String** | Email address of the contact to track. | [optional] |
-| **add_tags** | **Array&lt;String&gt;** |  | [optional] |
-| **remove_tags** | **Array&lt;String&gt;** |  | [optional] |
+| **add_tags** | **Array&lt;String&gt;** | Tags to add to contact | [optional] |
+| **remove_tags** | **Array&lt;String&gt;** | Tags to remove from contact | [optional] |
+| **email** | **String** | Email address of the contact | [optional] |
 
 ## Example
 
@@ -14,9 +14,9 @@
 require 'sendx-ruby-sdk'
 
 instance = SendX::TrackRequest.new(
-  email: user@example.com,
-  add_tags: [&quot;new&quot;,&quot;cool&quot;],
-  remove_tags: [&quot;old&quot;,&quot;bad&quot;]
+  add_tags: null,
+  remove_tags: null,
+  email: test@example.com
 )
 ```
 

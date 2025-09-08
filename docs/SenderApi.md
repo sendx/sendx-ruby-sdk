@@ -4,17 +4,17 @@ All URIs are relative to *https://api.sendx.io/api/v1/rest*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**create_sender**](SenderApi.md#create_sender) | **POST** /sender | Create Sender |
-| [**get_all_senders**](SenderApi.md#get_all_senders) | **GET** /sender | Get All Senders |
+| [**create_sender**](SenderApi.md#create_sender) | **POST** /sender | Create sender |
+| [**get_all_senders**](SenderApi.md#get_all_senders) | **GET** /sender | Get all senders |
 
 
 ## create_sender
 
-> <Sender> create_sender(sender_request)
+> <RestRSender> create_sender(rest_e_sender)
 
-Create Sender
+Create sender
 
-Creates a new sender in the system.
+Adds a new sender email address. 
 
 ### Examples
 
@@ -23,18 +23,18 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::SenderApi.new
-sender_request = SendX::SenderRequest.new({name: 'Linus', email: 'linus@linux.org'}) # SenderRequest | 
+rest_e_sender = SendX::RestESender.new({name: 'John Smith', email: 'john@example.com'}) # RestESender | 
 
 begin
-  # Create Sender
-  result = api_instance.create_sender(sender_request)
+  # Create sender
+  result = api_instance.create_sender(rest_e_sender)
   p result
 rescue SendX::ApiError => e
   puts "Error when calling SenderApi->create_sender: #{e}"
@@ -45,15 +45,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Sender>, Integer, Hash)> create_sender_with_http_info(sender_request)
+> <Array(<RestRSender>, Integer, Hash)> create_sender_with_http_info(rest_e_sender)
 
 ```ruby
 begin
-  # Create Sender
-  data, status_code, headers = api_instance.create_sender_with_http_info(sender_request)
+  # Create sender
+  data, status_code, headers = api_instance.create_sender_with_http_info(rest_e_sender)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Sender>
+  p data # => <RestRSender>
 rescue SendX::ApiError => e
   puts "Error when calling SenderApi->create_sender_with_http_info: #{e}"
 end
@@ -63,15 +63,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **sender_request** | [**SenderRequest**](SenderRequest.md) |  |  |
+| **rest_e_sender** | [**RestESender**](RestESender.md) |  |  |
 
 ### Return type
 
-[**Sender**](Sender.md)
+[**RestRSender**](RestRSender.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -81,11 +81,11 @@ end
 
 ## get_all_senders
 
-> <Array<SenderResponse>> get_all_senders(opts)
+> <Array<RestRSender>> get_all_senders
 
-Get All Senders
+Get all senders
 
-Retrieve all senders for the team, with optional filters like offset, limit, and search.
+Retrieves all verified sender addresses. 
 
 ### Examples
 
@@ -94,22 +94,17 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::SenderApi.new
-opts = {
-  offset: 56, # Integer | Number of records to skip
-  limit: 56, # Integer | Maximum number of records to return
-  search: 'search_example' # String | Search keyword to filter senders by name or email
-}
 
 begin
-  # Get All Senders
-  result = api_instance.get_all_senders(opts)
+  # Get all senders
+  result = api_instance.get_all_senders
   p result
 rescue SendX::ApiError => e
   puts "Error when calling SenderApi->get_all_senders: #{e}"
@@ -120,15 +115,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Array<SenderResponse>>, Integer, Hash)> get_all_senders_with_http_info(opts)
+> <Array(<Array<RestRSender>>, Integer, Hash)> get_all_senders_with_http_info
 
 ```ruby
 begin
-  # Get All Senders
-  data, status_code, headers = api_instance.get_all_senders_with_http_info(opts)
+  # Get all senders
+  data, status_code, headers = api_instance.get_all_senders_with_http_info
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Array<SenderResponse>>
+  p data # => <Array<RestRSender>>
 rescue SendX::ApiError => e
   puts "Error when calling SenderApi->get_all_senders_with_http_info: #{e}"
 end
@@ -136,19 +131,15 @@ end
 
 ### Parameters
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **offset** | **Integer** | Number of records to skip | [optional][default to 0] |
-| **limit** | **Integer** | Maximum number of records to return | [optional][default to 10] |
-| **search** | **String** | Search keyword to filter senders by name or email | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**Array&lt;SenderResponse&gt;**](SenderResponse.md)
+[**Array&lt;RestRSender&gt;**](RestRSender.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 

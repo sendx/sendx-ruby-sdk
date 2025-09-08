@@ -4,21 +4,21 @@ All URIs are relative to *https://api.sendx.io/api/v1/rest*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**create_contact**](ContactApi.md#create_contact) | **POST** /contact | Create a contact |
-| [**delete_contact**](ContactApi.md#delete_contact) | **DELETE** /contact/{identifier} | Delete Contact |
-| [**get_all_contacts**](ContactApi.md#get_all_contacts) | **GET** /contact | Get All Contacts |
-| [**get_contact_by_id**](ContactApi.md#get_contact_by_id) | **GET** /contact/{identifier} | Get Contact by Identifier |
-| [**unsubscribe_contact**](ContactApi.md#unsubscribe_contact) | **POST** /contact/unsubscribe/{identifier} | Unsubscribe Contact |
-| [**update_contact**](ContactApi.md#update_contact) | **PUT** /contact/{identifier} | Update Contact |
+| [**create_contact**](ContactApi.md#create_contact) | **POST** /contact | Create a new contact |
+| [**delete_contact**](ContactApi.md#delete_contact) | **DELETE** /contact/{identifier} | Delete contact |
+| [**get_all_contacts**](ContactApi.md#get_all_contacts) | **GET** /contact | Get all contacts |
+| [**get_contact**](ContactApi.md#get_contact) | **GET** /contact/{identifier} | Get contact by ID |
+| [**unsubscribe_contact**](ContactApi.md#unsubscribe_contact) | **POST** /contact/unsubscribe/{identifier} | Unsubscribe contact |
+| [**update_contact**](ContactApi.md#update_contact) | **PUT** /contact/{identifier} | Update contact |
 
 
 ## create_contact
 
-> <Response> create_contact(contact_request)
+> <RestRContact> create_contact(rest_e_contact)
 
-Create a contact
+Create a new contact
 
-Create Contact with given data
+Creates a new contact in your SendX team with the provided information.  **🎯 Key Features:** - Email validation and duplicate detection - Automatic relationship building with lists and tags - Smart custom field handling  **📋 Business Rules:** - Email is mandatory and must be unique within the team - Last tracked IP is stored for analytics 
 
 ### Examples
 
@@ -27,18 +27,18 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::ContactApi.new
-contact_request = SendX::ContactRequest.new # ContactRequest | 
+rest_e_contact = SendX::RestEContact.new({email: 'john.doe@example.com'}) # RestEContact | 
 
 begin
-  # Create a contact
-  result = api_instance.create_contact(contact_request)
+  # Create a new contact
+  result = api_instance.create_contact(rest_e_contact)
   p result
 rescue SendX::ApiError => e
   puts "Error when calling ContactApi->create_contact: #{e}"
@@ -49,15 +49,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Response>, Integer, Hash)> create_contact_with_http_info(contact_request)
+> <Array(<RestRContact>, Integer, Hash)> create_contact_with_http_info(rest_e_contact)
 
 ```ruby
 begin
-  # Create a contact
-  data, status_code, headers = api_instance.create_contact_with_http_info(contact_request)
+  # Create a new contact
+  data, status_code, headers = api_instance.create_contact_with_http_info(rest_e_contact)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Response>
+  p data # => <RestRContact>
 rescue SendX::ApiError => e
   puts "Error when calling ContactApi->create_contact_with_http_info: #{e}"
 end
@@ -67,15 +67,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **contact_request** | [**ContactRequest**](ContactRequest.md) |  |  |
+| **rest_e_contact** | [**RestEContact**](RestEContact.md) |  |  |
 
 ### Return type
 
-[**Response**](Response.md)
+[**RestRContact**](RestRContact.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -85,11 +85,11 @@ end
 
 ## delete_contact
 
-> <Response> delete_contact(identifier)
+> <DeleteResponse> delete_contact(identifier)
 
-Delete Contact
+Delete contact
 
-Deletes Contact
+Soft deletes a contact from your team.  **🎯 Key Features:** - Soft delete preserves data - Removes from all lists - Cancels pending campaigns - Maintains historical data 
 
 ### Examples
 
@@ -98,17 +98,17 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::ContactApi.new
-identifier = 'identifier_example' # String | The Contact ID/ Email to delete
+identifier = 'contact_BnKjkbBBS500CoBCP0oChQ' # String | Resource identifier with prefix (e.g., `contact_BnKjkbBBS500CoBCP0oChQ`)  **Format:** `<prefix>_<22-character-id>` 
 
 begin
-  # Delete Contact
+  # Delete contact
   result = api_instance.delete_contact(identifier)
   p result
 rescue SendX::ApiError => e
@@ -120,15 +120,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Response>, Integer, Hash)> delete_contact_with_http_info(identifier)
+> <Array(<DeleteResponse>, Integer, Hash)> delete_contact_with_http_info(identifier)
 
 ```ruby
 begin
-  # Delete Contact
+  # Delete contact
   data, status_code, headers = api_instance.delete_contact_with_http_info(identifier)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Response>
+  p data # => <DeleteResponse>
 rescue SendX::ApiError => e
   puts "Error when calling ContactApi->delete_contact_with_http_info: #{e}"
 end
@@ -138,15 +138,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **identifier** | **String** | The Contact ID/ Email to delete |  |
+| **identifier** | **String** | Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60;  |  |
 
 ### Return type
 
-[**Response**](Response.md)
+[**DeleteResponse**](DeleteResponse.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -156,11 +156,11 @@ end
 
 ## get_all_contacts
 
-> <Array<Contact>> get_all_contacts(opts)
+> <Array<RestRContact>> get_all_contacts(opts)
 
-Get All Contacts
+Get all contacts
 
-Find all contacts with optional filters
+Retrieves a paginated list of all contacts in your team with optional filtering capabilities.  **🎯 Key Features:** - Pagination support with offset/limit - Search contacts by name or email - All relationships included (lists, tags, custom fields) - Prefixed IDs for easy integration  **📊 Pagination:** - Default limit: 10 contacts per page - Maximum limit: 100 contacts per page - Use offset for page navigation  **🔍 Search:** - Searches across firstName, lastName, and email fields - Case-insensitive partial matching - Combine with pagination for large datasets 
 
 ### Examples
 
@@ -169,22 +169,21 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::ContactApi.new
 opts = {
-  offset: 56, # Integer | Offset for pagination
-  limit: 56, # Integer | Limit for pagination
-  contact_type: 'all', # String | Filter contacts by type
-  search: 'search_example' # String | Search term to filter contacts
+  offset: 0, # Integer | Number of records to skip for pagination.  **Examples:** - `0` - First page (default) - `50` - Second page (with limit=50) - `100` - Third page (with limit=50) 
+  limit: 10, # Integer | Maximum number of records to return.  **Constraints:** - Minimum: 1 - Maximum: 100 - Default: 10 
+  search: 'john' # String | Search term to filter contacts by name or email.  **Search Behavior:** - Searches firstName, lastName, and email fields - Case-insensitive partial matching - Minimum 2 characters for search  **Examples:** - `john` - Finds \"John Doe\", \"johnson@example.com\" - `@company.com` - Finds all emails from company.com - `smith` - Finds \"John Smith\", \"smith@email.com\" 
 }
 
 begin
-  # Get All Contacts
+  # Get all contacts
   result = api_instance.get_all_contacts(opts)
   p result
 rescue SendX::ApiError => e
@@ -196,15 +195,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Array<Contact>>, Integer, Hash)> get_all_contacts_with_http_info(opts)
+> <Array(<Array<RestRContact>>, Integer, Hash)> get_all_contacts_with_http_info(opts)
 
 ```ruby
 begin
-  # Get All Contacts
+  # Get all contacts
   data, status_code, headers = api_instance.get_all_contacts_with_http_info(opts)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Array<Contact>>
+  p data # => <Array<RestRContact>>
 rescue SendX::ApiError => e
   puts "Error when calling ContactApi->get_all_contacts_with_http_info: #{e}"
 end
@@ -214,18 +213,17 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **offset** | **Integer** | Offset for pagination | [optional][default to 0] |
-| **limit** | **Integer** | Limit for pagination | [optional][default to 10] |
-| **contact_type** | **String** | Filter contacts by type | [optional] |
-| **search** | **String** | Search term to filter contacts | [optional] |
+| **offset** | **Integer** | Number of records to skip for pagination.  **Examples:** - &#x60;0&#x60; - First page (default) - &#x60;50&#x60; - Second page (with limit&#x3D;50) - &#x60;100&#x60; - Third page (with limit&#x3D;50)  | [optional][default to 0] |
+| **limit** | **Integer** | Maximum number of records to return.  **Constraints:** - Minimum: 1 - Maximum: 100 - Default: 10  | [optional][default to 50] |
+| **search** | **String** | Search term to filter contacts by name or email.  **Search Behavior:** - Searches firstName, lastName, and email fields - Case-insensitive partial matching - Minimum 2 characters for search  **Examples:** - &#x60;john&#x60; - Finds \&quot;John Doe\&quot;, \&quot;johnson@example.com\&quot; - &#x60;@company.com&#x60; - Finds all emails from company.com - &#x60;smith&#x60; - Finds \&quot;John Smith\&quot;, \&quot;smith@email.com\&quot;  | [optional] |
 
 ### Return type
 
-[**Array&lt;Contact&gt;**](Contact.md)
+[**Array&lt;RestRContact&gt;**](RestRContact.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -233,13 +231,13 @@ end
 - **Accept**: application/json
 
 
-## get_contact_by_id
+## get_contact
 
-> <Contact> get_contact_by_id(identifier)
+> <RestRContact> get_contact(identifier)
 
-Get Contact by Identifier
+Get contact by ID
 
-Retrieve a specific contact by its identifier.
+Retrieves detailed information about a specific contact.  **🎯 Key Features:** - Returns complete contact profile - Includes all lists and tags - Shows custom field values - Provides engagement metrics 
 
 ### Examples
 
@@ -248,39 +246,39 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::ContactApi.new
-identifier = 'john@doe.com' # String | The ID or Email of the contact to retrieve.
+identifier = 'contact_BnKjkbBBS500CoBCP0oChQ' # String | Resource identifier with prefix (e.g., `contact_BnKjkbBBS500CoBCP0oChQ`)  **Format:** `<prefix>_<22-character-id>` 
 
 begin
-  # Get Contact by Identifier
-  result = api_instance.get_contact_by_id(identifier)
+  # Get contact by ID
+  result = api_instance.get_contact(identifier)
   p result
 rescue SendX::ApiError => e
-  puts "Error when calling ContactApi->get_contact_by_id: #{e}"
+  puts "Error when calling ContactApi->get_contact: #{e}"
 end
 ```
 
-#### Using the get_contact_by_id_with_http_info variant
+#### Using the get_contact_with_http_info variant
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Contact>, Integer, Hash)> get_contact_by_id_with_http_info(identifier)
+> <Array(<RestRContact>, Integer, Hash)> get_contact_with_http_info(identifier)
 
 ```ruby
 begin
-  # Get Contact by Identifier
-  data, status_code, headers = api_instance.get_contact_by_id_with_http_info(identifier)
+  # Get contact by ID
+  data, status_code, headers = api_instance.get_contact_with_http_info(identifier)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Contact>
+  p data # => <RestRContact>
 rescue SendX::ApiError => e
-  puts "Error when calling ContactApi->get_contact_by_id_with_http_info: #{e}"
+  puts "Error when calling ContactApi->get_contact_with_http_info: #{e}"
 end
 ```
 
@@ -288,15 +286,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **identifier** | **String** | The ID or Email of the contact to retrieve. |  |
+| **identifier** | **String** | Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60;  |  |
 
 ### Return type
 
-[**Contact**](Contact.md)
+[**RestRContact**](RestRContact.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -306,11 +304,11 @@ end
 
 ## unsubscribe_contact
 
-> <Response> unsubscribe_contact(identifier)
+> <MessageResponse> unsubscribe_contact(identifier)
 
-Unsubscribe Contact
+Unsubscribe contact
 
-Unsubscribe a globally existing contact
+Unsubscribes a contact from all marketing communications.  **🎯 Key Features:** - Marks contact as unsubscribed - Removes from all active campaigns - Maintains unsubscribe history - Complies with anti-spam regulations 
 
 ### Examples
 
@@ -319,17 +317,17 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::ContactApi.new
-identifier = 'sendx123' # String | The Contact ID or email to unsubscribe
+identifier = 'contact_BnKjkbBBS500CoBCP0oChQ' # String | Resource identifier with prefix (e.g., `contact_BnKjkbBBS500CoBCP0oChQ`)  **Format:** `<prefix>_<22-character-id>` 
 
 begin
-  # Unsubscribe Contact
+  # Unsubscribe contact
   result = api_instance.unsubscribe_contact(identifier)
   p result
 rescue SendX::ApiError => e
@@ -341,15 +339,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Response>, Integer, Hash)> unsubscribe_contact_with_http_info(identifier)
+> <Array(<MessageResponse>, Integer, Hash)> unsubscribe_contact_with_http_info(identifier)
 
 ```ruby
 begin
-  # Unsubscribe Contact
+  # Unsubscribe contact
   data, status_code, headers = api_instance.unsubscribe_contact_with_http_info(identifier)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Response>
+  p data # => <MessageResponse>
 rescue SendX::ApiError => e
   puts "Error when calling ContactApi->unsubscribe_contact_with_http_info: #{e}"
 end
@@ -359,15 +357,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **identifier** | **String** | The Contact ID or email to unsubscribe |  |
+| **identifier** | **String** | Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60;  |  |
 
 ### Return type
 
-[**Response**](Response.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -377,11 +375,11 @@ end
 
 ## update_contact
 
-> <Contact> update_contact(contact_request, identifier)
+> <RestRContact> update_contact(rest_e_contact, identifier)
 
-Update Contact
+Update contact
 
-Update Contact with given data
+Updates an existing contact's information.  **🎯 Key Features:** - Partial updates supported - Add/remove lists and tags - Update custom fields - Change email address 
 
 ### Examples
 
@@ -390,19 +388,19 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::ContactApi.new
-contact_request = SendX::ContactRequest.new # ContactRequest | 
-identifier = 'sendxid123' # String | The ID or email of the Contact to update
+rest_e_contact = SendX::RestEContact.new({email: 'john.doe@example.com'}) # RestEContact | 
+identifier = 'contact_BnKjkbBBS500CoBCP0oChQ' # String | Resource identifier with prefix (e.g., `contact_BnKjkbBBS500CoBCP0oChQ`)  **Format:** `<prefix>_<22-character-id>` 
 
 begin
-  # Update Contact
-  result = api_instance.update_contact(contact_request, identifier)
+  # Update contact
+  result = api_instance.update_contact(rest_e_contact, identifier)
   p result
 rescue SendX::ApiError => e
   puts "Error when calling ContactApi->update_contact: #{e}"
@@ -413,15 +411,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Contact>, Integer, Hash)> update_contact_with_http_info(contact_request, identifier)
+> <Array(<RestRContact>, Integer, Hash)> update_contact_with_http_info(rest_e_contact, identifier)
 
 ```ruby
 begin
-  # Update Contact
-  data, status_code, headers = api_instance.update_contact_with_http_info(contact_request, identifier)
+  # Update contact
+  data, status_code, headers = api_instance.update_contact_with_http_info(rest_e_contact, identifier)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Contact>
+  p data # => <RestRContact>
 rescue SendX::ApiError => e
   puts "Error when calling ContactApi->update_contact_with_http_info: #{e}"
 end
@@ -431,16 +429,16 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **contact_request** | [**ContactRequest**](ContactRequest.md) |  |  |
-| **identifier** | **String** | The ID or email of the Contact to update |  |
+| **rest_e_contact** | [**RestEContact**](RestEContact.md) |  |  |
+| **identifier** | **String** | Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60;  |  |
 
 ### Return type
 
-[**Contact**](Contact.md)
+[**RestRContact**](RestRContact.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 

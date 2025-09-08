@@ -6,7 +6,6 @@
 | ---- | ---- | ----------- | ----- |
 | **status** | **String** |  | [optional] |
 | **message** | **String** |  | [optional] |
-| **data** | [**Contact**](Contact.md) |  | [optional] |
 
 ## Example
 
@@ -14,9 +13,8 @@
 require 'sendx-ruby-sdk'
 
 instance = SendX::IdentifyResponse.new(
-  status: null,
-  message: null,
-  data: null
+  status: 200,
+  message: OK
 )
 ```
 

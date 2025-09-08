@@ -1,12 +1,12 @@
 =begin
 #SendX REST API
 
-## Introduction SendX is an email marketing product. It helps you convert website visitors to customers, send them promotional emails, engage with them using drip sequences and craft custom journeys using powerful but simple automations. The SendX API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs. The SendX Rest API doesn’t support bulk updates. You can work on only one object per request. <br> 
+## SendX REST API Documentation  ## 🚀 Introduction  The SendX API is organized around REST principles. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.  **Key Features:** - 🔒 **Security**: Team-based authentication with optional member-level access - 🎯 **Resource-Oriented**: RESTful design with clear resource boundaries - 📊 **Rich Data Models**: Three-layer model system (Input/Output/Internal) - 🔗 **Relationships**: Automatic prefix handling for resource relationships - 📈 **Scalable**: Built for high-volume email marketing operations  ## 🏗️ Architecture Overview  SendX uses a three-layer model architecture:  1. **Input Models** (`RestE*`): For API requests 2. **Output Models** (`RestR*`): For API responses with prefixed IDs 3. **Internal Models**: Core business logic (not exposed in API)  ## 🔐 Security & Authentication  SendX uses API key authentication:  ### Team API Key ```http X-Team-ApiKey: YOUR_TEAM_API_KEY ``` - **Required for all requests** - Team-level access to resources - Available in SendX Settings → Team API Key  ## 🆔 Encrypted ID System  SendX uses encrypted IDs for security and better developer experience:  - **Internal IDs**: Sequential integers (not exposed) - **Encrypted IDs**: 22-character alphanumeric strings - **Prefixed IDs**: Resource-type prefixes in API responses (`contact_<22-char-id>`)  ### ID Format  **All resource IDs follow this pattern:** ``` <resource_prefix>_<22_character_alphanumeric_string> ```  **Example:** ```json {   \"id\": \"contact_BnKjkbBBS500CoBCP0oChQ\",   \"lists\": [\"list_OcuxJHdiAvujmwQVJfd3ss\", \"list_0tOFLp5RgV7s3LNiHrjGYs\"],   \"tags\": [\"tag_UhsDkjL772Qbj5lWtT62VK\", \"tag_fL7t9lsnZ9swvx2HrtQ9wM\"] } ```  ## 📚 Resource Prefixes  | Resource | Prefix | Example | |----------|--------|---------| | Contact | `contact_` | `contact_BnKjkbBBS500CoBCP0oChQ` | | Campaign | `campaign_` | `campaign_LUE9BTxmksSmqHWbh96zsn` | | List | `list_` | `list_OcuxJHdiAvujmwQVJfd3ss` | | Tag | `tag_` | `tag_UhsDkjL772Qbj5lWtT62VK` | | Sender | `sender_` | `sender_4vK3WFhMgvOwUNyaL4QxCD` | | Template | `template_` | `template_f3lJvTEhSjKGVb5Lwc5SWS` | | Custom Field | `field_` | `field_MnuqBAG2NPLm7PZMWbjQxt` | | Webhook | `webhook_` | `webhook_9l154iiXlZoPo7vngmamee` | | Post | `post_` | `post_XyZ123aBc456DeF789GhI` | | Post Category | `post_category_` | `post_category_YzS1wOU20yw87UUHKxMzwn` | | Post Tag | `post_tag_` | `post_tag_123XyZ456AbC` | | Member | `member_` | `member_JkL012MnO345PqR678` |  ## 🎯 Best Practices  ### Error Handling - **Always check status codes**: 2xx = success, 4xx = client error, 5xx = server error - **Read error messages**: Descriptive messages help debug issues - **Handle rate limits**: Respect API rate limits for optimal performance  ### Data Validation - **Email format**: Must be valid email addresses - **Required fields**: Check documentation for mandatory fields - **Field lengths**: Respect maximum length constraints  ### Performance - **Pagination**: Use offset/limit for large datasets - **Batch operations**: Process multiple items when supported - **Caching**: Cache responses when appropriate  ## 🛠️ SDKs & Integration  Official SDKs available for: - [Golang](https://github.com/sendx/sendx-go-sdk) - [Python](https://github.com/sendx/sendx-python-sdk) - [Ruby](https://github.com/sendx/sendx-ruby-sdk) - [Java](https://github.com/sendx/sendx-java-sdk) - [PHP](https://github.com/sendx/sendx-php-sdk) - [JavaScript](https://github.com/sendx/sendx-javascript-sdk)  ## 📞 Support  Need help? Contact us: - 💬 **Website Chat**: Available on sendx.io - 📧 **Email**: hello@sendx.io - 📚 **Documentation**: Full guides at help.sendx.io  ---  **API Endpoint:** `https://api.sendx.io/api/v1/rest`  [<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://god.gw.postman.com/run-collection/33476323-44b198b0-5219-4619-a01f-cfc24d573885?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D33476323-44b198b0-5219-4619-a01f-cfc24d573885%26entityType%3Dcollection%26workspaceId%3D6b1e4f65-96a9-4136-9512-6266c852517e) 
 
 The version of the OpenAPI document: 1.0.0
-Contact: support@sendx.io
+Contact: hello@sendx.io
 Generated by: https://openapi-generator.tech
-Generator version: 7.8.0
+Generator version: 7.13.0
 
 =end
 
@@ -19,28 +19,28 @@ module SendX
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create a contact
-    # Create Contact with given data
-    # @param contact_request [ContactRequest] 
+    # Create a new contact
+    # Creates a new contact in your SendX team with the provided information.  **🎯 Key Features:** - Email validation and duplicate detection - Automatic relationship building with lists and tags - Smart custom field handling  **📋 Business Rules:** - Email is mandatory and must be unique within the team - Last tracked IP is stored for analytics 
+    # @param rest_e_contact [RestEContact] 
     # @param [Hash] opts the optional parameters
-    # @return [Response]
-    def create_contact(contact_request, opts = {})
-      data, _status_code, _headers = create_contact_with_http_info(contact_request, opts)
+    # @return [RestRContact]
+    def create_contact(rest_e_contact, opts = {})
+      data, _status_code, _headers = create_contact_with_http_info(rest_e_contact, opts)
       data
     end
 
-    # Create a contact
-    # Create Contact with given data
-    # @param contact_request [ContactRequest] 
+    # Create a new contact
+    # Creates a new contact in your SendX team with the provided information.  **🎯 Key Features:** - Email validation and duplicate detection - Automatic relationship building with lists and tags - Smart custom field handling  **📋 Business Rules:** - Email is mandatory and must be unique within the team - Last tracked IP is stored for analytics 
+    # @param rest_e_contact [RestEContact] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(Response, Integer, Hash)>] Response data, response status code and response headers
-    def create_contact_with_http_info(contact_request, opts = {})
+    # @return [Array<(RestRContact, Integer, Hash)>] RestRContact data, response status code and response headers
+    def create_contact_with_http_info(rest_e_contact, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.create_contact ...'
       end
-      # verify the required parameter 'contact_request' is set
-      if @api_client.config.client_side_validation && contact_request.nil?
-        fail ArgumentError, "Missing the required parameter 'contact_request' when calling ContactApi.create_contact"
+      # verify the required parameter 'rest_e_contact' is set
+      if @api_client.config.client_side_validation && rest_e_contact.nil?
+        fail ArgumentError, "Missing the required parameter 'rest_e_contact' when calling ContactApi.create_contact"
       end
       # resource path
       local_var_path = '/contact'
@@ -62,13 +62,13 @@ module SendX
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(contact_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(rest_e_contact)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Response'
+      return_type = opts[:debug_return_type] || 'RestRContact'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ContactApi.create_contact",
@@ -87,21 +87,21 @@ module SendX
       return data, status_code, headers
     end
 
-    # Delete Contact
-    # Deletes Contact
-    # @param identifier [String] The Contact ID/ Email to delete
+    # Delete contact
+    # Soft deletes a contact from your team.  **🎯 Key Features:** - Soft delete preserves data - Removes from all lists - Cancels pending campaigns - Maintains historical data 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Response]
+    # @return [DeleteResponse]
     def delete_contact(identifier, opts = {})
       data, _status_code, _headers = delete_contact_with_http_info(identifier, opts)
       data
     end
 
-    # Delete Contact
-    # Deletes Contact
-    # @param identifier [String] The Contact ID/ Email to delete
+    # Delete contact
+    # Soft deletes a contact from your team.  **🎯 Key Features:** - Soft delete preserves data - Removes from all lists - Cancels pending campaigns - Maintains historical data 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(Response, Integer, Hash)>] Response data, response status code and response headers
+    # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_contact_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.delete_contact ...'
@@ -110,6 +110,11 @@ module SendX
       if @api_client.config.client_side_validation && identifier.nil?
         fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.delete_contact"
       end
+      pattern = Regexp.new(/^[a-z_]+_[a-zA-Z0-9]{22}$/)
+      if @api_client.config.client_side_validation && identifier !~ pattern
+        fail ArgumentError, "invalid value for 'identifier' when calling ContactApi.delete_contact, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/contact/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
@@ -128,10 +133,10 @@ module SendX
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Response'
+      return_type = opts[:debug_return_type] || 'DeleteResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ContactApi.delete_contact",
@@ -150,35 +155,49 @@ module SendX
       return data, status_code, headers
     end
 
-    # Get All Contacts
-    # Find all contacts with optional filters
+    # Get all contacts
+    # Retrieves a paginated list of all contacts in your team with optional filtering capabilities.  **🎯 Key Features:** - Pagination support with offset/limit - Search contacts by name or email - All relationships included (lists, tags, custom fields) - Prefixed IDs for easy integration  **📊 Pagination:** - Default limit: 10 contacts per page - Maximum limit: 100 contacts per page - Use offset for page navigation  **🔍 Search:** - Searches across firstName, lastName, and email fields - Case-insensitive partial matching - Combine with pagination for large datasets 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :offset Offset for pagination (default to 0)
-    # @option opts [Integer] :limit Limit for pagination (default to 10)
-    # @option opts [String] :contact_type Filter contacts by type
-    # @option opts [String] :search Search term to filter contacts
-    # @return [Array<Contact>]
+    # @option opts [Integer] :offset Number of records to skip for pagination.  **Examples:** - &#x60;0&#x60; - First page (default) - &#x60;50&#x60; - Second page (with limit&#x3D;50) - &#x60;100&#x60; - Third page (with limit&#x3D;50)  (default to 0)
+    # @option opts [Integer] :limit Maximum number of records to return.  **Constraints:** - Minimum: 1 - Maximum: 100 - Default: 10  (default to 50)
+    # @option opts [String] :search Search term to filter contacts by name or email.  **Search Behavior:** - Searches firstName, lastName, and email fields - Case-insensitive partial matching - Minimum 2 characters for search  **Examples:** - &#x60;john&#x60; - Finds \&quot;John Doe\&quot;, \&quot;johnson@example.com\&quot; - &#x60;@company.com&#x60; - Finds all emails from company.com - &#x60;smith&#x60; - Finds \&quot;John Smith\&quot;, \&quot;smith@email.com\&quot; 
+    # @return [Array<RestRContact>]
     def get_all_contacts(opts = {})
       data, _status_code, _headers = get_all_contacts_with_http_info(opts)
       data
     end
 
-    # Get All Contacts
-    # Find all contacts with optional filters
+    # Get all contacts
+    # Retrieves a paginated list of all contacts in your team with optional filtering capabilities.  **🎯 Key Features:** - Pagination support with offset/limit - Search contacts by name or email - All relationships included (lists, tags, custom fields) - Prefixed IDs for easy integration  **📊 Pagination:** - Default limit: 10 contacts per page - Maximum limit: 100 contacts per page - Use offset for page navigation  **🔍 Search:** - Searches across firstName, lastName, and email fields - Case-insensitive partial matching - Combine with pagination for large datasets 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :offset Offset for pagination (default to 0)
-    # @option opts [Integer] :limit Limit for pagination (default to 10)
-    # @option opts [String] :contact_type Filter contacts by type
-    # @option opts [String] :search Search term to filter contacts
-    # @return [Array<(Array<Contact>, Integer, Hash)>] Array<Contact> data, response status code and response headers
+    # @option opts [Integer] :offset Number of records to skip for pagination.  **Examples:** - &#x60;0&#x60; - First page (default) - &#x60;50&#x60; - Second page (with limit&#x3D;50) - &#x60;100&#x60; - Third page (with limit&#x3D;50)  (default to 0)
+    # @option opts [Integer] :limit Maximum number of records to return.  **Constraints:** - Minimum: 1 - Maximum: 100 - Default: 10  (default to 50)
+    # @option opts [String] :search Search term to filter contacts by name or email.  **Search Behavior:** - Searches firstName, lastName, and email fields - Case-insensitive partial matching - Minimum 2 characters for search  **Examples:** - &#x60;john&#x60; - Finds \&quot;John Doe\&quot;, \&quot;johnson@example.com\&quot; - &#x60;@company.com&#x60; - Finds all emails from company.com - &#x60;smith&#x60; - Finds \&quot;John Smith\&quot;, \&quot;smith@email.com\&quot; 
+    # @return [Array<(Array<RestRContact>, Integer, Hash)>] Array<RestRContact> data, response status code and response headers
     def get_all_contacts_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.get_all_contacts ...'
       end
-      allowable_values = ["all", "unsubscribed", "bounced", "markedspam"]
-      if @api_client.config.client_side_validation && opts[:'contact_type'] && !allowable_values.include?(opts[:'contact_type'])
-        fail ArgumentError, "invalid value for \"contact_type\", must be one of #{allowable_values}"
+      if @api_client.config.client_side_validation && !opts[:'offset'].nil? && opts[:'offset'] < 0
+        fail ArgumentError, 'invalid value for "opts[:"offset"]" when calling ContactApi.get_all_contacts, must be greater than or equal to 0.'
       end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 1000
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ContactApi.get_all_contacts, must be smaller than or equal to 1000.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ContactApi.get_all_contacts, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'search'].nil? && opts[:'search'].to_s.length > 255
+        fail ArgumentError, 'invalid value for "opts[:"search"]" when calling ContactApi.get_all_contacts, the character length must be smaller than or equal to 255.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'search'].nil? && opts[:'search'].to_s.length < 2
+        fail ArgumentError, 'invalid value for "opts[:"search"]" when calling ContactApi.get_all_contacts, the character length must be great than or equal to 2.'
+      end
+
       # resource path
       local_var_path = '/contact'
 
@@ -186,7 +205,6 @@ module SendX
       query_params = opts[:query_params] || {}
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'contactType'] = opts[:'contact_type'] if !opts[:'contact_type'].nil?
       query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
 
       # header parameters
@@ -201,10 +219,10 @@ module SendX
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Array<Contact>'
+      return_type = opts[:debug_return_type] || 'Array<RestRContact>'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ContactApi.get_all_contacts",
@@ -223,29 +241,34 @@ module SendX
       return data, status_code, headers
     end
 
-    # Get Contact by Identifier
-    # Retrieve a specific contact by its identifier.
-    # @param identifier [String] The ID or Email of the contact to retrieve.
+    # Get contact by ID
+    # Retrieves detailed information about a specific contact.  **🎯 Key Features:** - Returns complete contact profile - Includes all lists and tags - Shows custom field values - Provides engagement metrics 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Contact]
-    def get_contact_by_id(identifier, opts = {})
-      data, _status_code, _headers = get_contact_by_id_with_http_info(identifier, opts)
+    # @return [RestRContact]
+    def get_contact(identifier, opts = {})
+      data, _status_code, _headers = get_contact_with_http_info(identifier, opts)
       data
     end
 
-    # Get Contact by Identifier
-    # Retrieve a specific contact by its identifier.
-    # @param identifier [String] The ID or Email of the contact to retrieve.
+    # Get contact by ID
+    # Retrieves detailed information about a specific contact.  **🎯 Key Features:** - Returns complete contact profile - Includes all lists and tags - Shows custom field values - Provides engagement metrics 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(Contact, Integer, Hash)>] Contact data, response status code and response headers
-    def get_contact_by_id_with_http_info(identifier, opts = {})
+    # @return [Array<(RestRContact, Integer, Hash)>] RestRContact data, response status code and response headers
+    def get_contact_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: ContactApi.get_contact_by_id ...'
+        @api_client.config.logger.debug 'Calling API: ContactApi.get_contact ...'
       end
       # verify the required parameter 'identifier' is set
       if @api_client.config.client_side_validation && identifier.nil?
-        fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.get_contact_by_id"
+        fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.get_contact"
       end
+      pattern = Regexp.new(/^[a-z_]+_[a-zA-Z0-9]{22}$/)
+      if @api_client.config.client_side_validation && identifier !~ pattern
+        fail ArgumentError, "invalid value for 'identifier' when calling ContactApi.get_contact, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/contact/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
@@ -264,13 +287,13 @@ module SendX
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Contact'
+      return_type = opts[:debug_return_type] || 'RestRContact'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
-        :operation => :"ContactApi.get_contact_by_id",
+        :operation => :"ContactApi.get_contact",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -281,26 +304,26 @@ module SendX
 
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: ContactApi#get_contact_by_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: ContactApi#get_contact\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
 
-    # Unsubscribe Contact
-    # Unsubscribe a globally existing contact
-    # @param identifier [String] The Contact ID or email to unsubscribe
+    # Unsubscribe contact
+    # Unsubscribes a contact from all marketing communications.  **🎯 Key Features:** - Marks contact as unsubscribed - Removes from all active campaigns - Maintains unsubscribe history - Complies with anti-spam regulations 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Response]
+    # @return [MessageResponse]
     def unsubscribe_contact(identifier, opts = {})
       data, _status_code, _headers = unsubscribe_contact_with_http_info(identifier, opts)
       data
     end
 
-    # Unsubscribe Contact
-    # Unsubscribe a globally existing contact
-    # @param identifier [String] The Contact ID or email to unsubscribe
+    # Unsubscribe contact
+    # Unsubscribes a contact from all marketing communications.  **🎯 Key Features:** - Marks contact as unsubscribed - Removes from all active campaigns - Maintains unsubscribe history - Complies with anti-spam regulations 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(Response, Integer, Hash)>] Response data, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def unsubscribe_contact_with_http_info(identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.unsubscribe_contact ...'
@@ -309,6 +332,11 @@ module SendX
       if @api_client.config.client_side_validation && identifier.nil?
         fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.unsubscribe_contact"
       end
+      pattern = Regexp.new(/^[a-z_]+_[a-zA-Z0-9]{22}$/)
+      if @api_client.config.client_side_validation && identifier !~ pattern
+        fail ArgumentError, "invalid value for 'identifier' when calling ContactApi.unsubscribe_contact, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/contact/unsubscribe/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
@@ -327,10 +355,10 @@ module SendX
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Response'
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ContactApi.unsubscribe_contact",
@@ -349,35 +377,40 @@ module SendX
       return data, status_code, headers
     end
 
-    # Update Contact
-    # Update Contact with given data
-    # @param contact_request [ContactRequest] 
-    # @param identifier [String] The ID or email of the Contact to update
+    # Update contact
+    # Updates an existing contact's information.  **🎯 Key Features:** - Partial updates supported - Add/remove lists and tags - Update custom fields - Change email address 
+    # @param rest_e_contact [RestEContact] 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Contact]
-    def update_contact(contact_request, identifier, opts = {})
-      data, _status_code, _headers = update_contact_with_http_info(contact_request, identifier, opts)
+    # @return [RestRContact]
+    def update_contact(rest_e_contact, identifier, opts = {})
+      data, _status_code, _headers = update_contact_with_http_info(rest_e_contact, identifier, opts)
       data
     end
 
-    # Update Contact
-    # Update Contact with given data
-    # @param contact_request [ContactRequest] 
-    # @param identifier [String] The ID or email of the Contact to update
+    # Update contact
+    # Updates an existing contact&#39;s information.  **🎯 Key Features:** - Partial updates supported - Add/remove lists and tags - Update custom fields - Change email address 
+    # @param rest_e_contact [RestEContact] 
+    # @param identifier [String] Resource identifier with prefix (e.g., &#x60;contact_BnKjkbBBS500CoBCP0oChQ&#x60;)  **Format:** &#x60;&lt;prefix&gt;_&lt;22-character-id&gt;&#x60; 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(Contact, Integer, Hash)>] Contact data, response status code and response headers
-    def update_contact_with_http_info(contact_request, identifier, opts = {})
+    # @return [Array<(RestRContact, Integer, Hash)>] RestRContact data, response status code and response headers
+    def update_contact_with_http_info(rest_e_contact, identifier, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ContactApi.update_contact ...'
       end
-      # verify the required parameter 'contact_request' is set
-      if @api_client.config.client_side_validation && contact_request.nil?
-        fail ArgumentError, "Missing the required parameter 'contact_request' when calling ContactApi.update_contact"
+      # verify the required parameter 'rest_e_contact' is set
+      if @api_client.config.client_side_validation && rest_e_contact.nil?
+        fail ArgumentError, "Missing the required parameter 'rest_e_contact' when calling ContactApi.update_contact"
       end
       # verify the required parameter 'identifier' is set
       if @api_client.config.client_side_validation && identifier.nil?
         fail ArgumentError, "Missing the required parameter 'identifier' when calling ContactApi.update_contact"
       end
+      pattern = Regexp.new(/^[a-z_]+_[a-zA-Z0-9]{22}$/)
+      if @api_client.config.client_side_validation && identifier !~ pattern
+        fail ArgumentError, "invalid value for 'identifier' when calling ContactApi.update_contact, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/contact/{identifier}'.sub('{' + 'identifier' + '}', CGI.escape(identifier.to_s))
 
@@ -398,13 +431,13 @@ module SendX
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(contact_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(rest_e_contact)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'Contact'
+      return_type = opts[:debug_return_type] || 'RestRContact'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKeyAuth']
+      auth_names = opts[:debug_auth_names] || ['TeamApiKey']
 
       new_options = opts.merge(
         :operation => :"ContactApi.update_contact",

@@ -4,20 +4,19 @@ All URIs are relative to *https://api.sendx.io/api/v1/rest*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**create_campaign**](CampaignApi.md#create_campaign) | **POST** /campaign | Create Campaign |
-| [**delete_campaign**](CampaignApi.md#delete_campaign) | **DELETE** /campaign/{campaignId} | Delete Campaign |
-| [**edit_campaign**](CampaignApi.md#edit_campaign) | **PUT** /campaign/{campaignId} | Edit Campaign |
-| [**get_all_campaigns**](CampaignApi.md#get_all_campaigns) | **GET** /campaign | Get All Campaigns |
-| [**get_campaign_by_id**](CampaignApi.md#get_campaign_by_id) | **GET** /campaign/{campaignId} | Get Campaign By Id |
+| [**create_campaign**](CampaignApi.md#create_campaign) | **POST** /campaign | Create campaign |
+| [**delete_campaign**](CampaignApi.md#delete_campaign) | **DELETE** /campaign/{identifier} | Delete campaign |
+| [**get_all_campaigns**](CampaignApi.md#get_all_campaigns) | **GET** /campaign | Get all campaigns |
+| [**get_campaign**](CampaignApi.md#get_campaign) | **GET** /campaign/{identifier} | Get campaign by ID |
 
 
 ## create_campaign
 
-> <CreateResponse> create_campaign(campaign_request)
+> <RestRCampaign> create_campaign(rest_e_campaign)
 
-Create Campaign
+Create campaign
 
-Create a new email campaign
+Creates a new email campaign. 
 
 ### Examples
 
@@ -26,18 +25,18 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::CampaignApi.new
-campaign_request = SendX::CampaignRequest.new # CampaignRequest | The campaign content
+rest_e_campaign = SendX::RestECampaign.new({name: 'Spring Sale Campaign', subject: '🌸 Spring Sale - {{contact.firstName}}, Save 30%!', sender: 'sender_4vK3WFhMgvOwUNyaL4QxCD', html_code: '<html><body><h1>Spring Sale!</h1><p>Save 30% on all items</p></body></html>'}) # RestECampaign | 
 
 begin
-  # Create Campaign
-  result = api_instance.create_campaign(campaign_request)
+  # Create campaign
+  result = api_instance.create_campaign(rest_e_campaign)
   p result
 rescue SendX::ApiError => e
   puts "Error when calling CampaignApi->create_campaign: #{e}"
@@ -48,15 +47,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CreateResponse>, Integer, Hash)> create_campaign_with_http_info(campaign_request)
+> <Array(<RestRCampaign>, Integer, Hash)> create_campaign_with_http_info(rest_e_campaign)
 
 ```ruby
 begin
-  # Create Campaign
-  data, status_code, headers = api_instance.create_campaign_with_http_info(campaign_request)
+  # Create campaign
+  data, status_code, headers = api_instance.create_campaign_with_http_info(rest_e_campaign)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <CreateResponse>
+  p data # => <RestRCampaign>
 rescue SendX::ApiError => e
   puts "Error when calling CampaignApi->create_campaign_with_http_info: #{e}"
 end
@@ -66,15 +65,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **campaign_request** | [**CampaignRequest**](CampaignRequest.md) | The campaign content |  |
+| **rest_e_campaign** | [**RestECampaign**](RestECampaign.md) |  |  |
 
 ### Return type
 
-[**CreateResponse**](CreateResponse.md)
+[**RestRCampaign**](RestRCampaign.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -84,11 +83,11 @@ end
 
 ## delete_campaign
 
-> <DeleteCampaign200Response> delete_campaign(campaign_id)
+> <DeleteResponse> delete_campaign(identifier)
 
-Delete Campaign
+Delete campaign
 
-Deletes a specific campaign by its campaignId.
+Deletes a campaign. 
 
 ### Examples
 
@@ -97,18 +96,18 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::CampaignApi.new
-campaign_id = 'campaign_id_example' # String | The ID of the campaign to delete
+identifier = 'identifier_example' # String | Campaign identifier to delete
 
 begin
-  # Delete Campaign
-  result = api_instance.delete_campaign(campaign_id)
+  # Delete campaign
+  result = api_instance.delete_campaign(identifier)
   p result
 rescue SendX::ApiError => e
   puts "Error when calling CampaignApi->delete_campaign: #{e}"
@@ -119,15 +118,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<DeleteCampaign200Response>, Integer, Hash)> delete_campaign_with_http_info(campaign_id)
+> <Array(<DeleteResponse>, Integer, Hash)> delete_campaign_with_http_info(identifier)
 
 ```ruby
 begin
-  # Delete Campaign
-  data, status_code, headers = api_instance.delete_campaign_with_http_info(campaign_id)
+  # Delete campaign
+  data, status_code, headers = api_instance.delete_campaign_with_http_info(identifier)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <DeleteCampaign200Response>
+  p data # => <DeleteResponse>
 rescue SendX::ApiError => e
   puts "Error when calling CampaignApi->delete_campaign_with_http_info: #{e}"
 end
@@ -137,15 +136,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **campaign_id** | **String** | The ID of the campaign to delete |  |
+| **identifier** | **String** | Campaign identifier to delete |  |
 
 ### Return type
 
-[**DeleteCampaign200Response**](DeleteCampaign200Response.md)
+[**DeleteResponse**](DeleteResponse.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -153,86 +152,13 @@ end
 - **Accept**: application/json
 
 
-## edit_campaign
-
-> <Campaign> edit_campaign(campaign_request, campaign_id)
-
-Edit Campaign
-
-Submit edited content for a specific campaign.
-
-### Examples
-
-```ruby
-require 'time'
-require 'sendx-ruby-sdk'
-# setup authorization
-SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
-end
-
-api_instance = SendX::CampaignApi.new
-campaign_request = SendX::CampaignRequest.new # CampaignRequest | 
-campaign_id = 'campaign_id_example' # String | The ID of the campaign to edit
-
-begin
-  # Edit Campaign
-  result = api_instance.edit_campaign(campaign_request, campaign_id)
-  p result
-rescue SendX::ApiError => e
-  puts "Error when calling CampaignApi->edit_campaign: #{e}"
-end
-```
-
-#### Using the edit_campaign_with_http_info variant
-
-This returns an Array which contains the response data, status code and headers.
-
-> <Array(<Campaign>, Integer, Hash)> edit_campaign_with_http_info(campaign_request, campaign_id)
-
-```ruby
-begin
-  # Edit Campaign
-  data, status_code, headers = api_instance.edit_campaign_with_http_info(campaign_request, campaign_id)
-  p status_code # => 2xx
-  p headers # => { ... }
-  p data # => <Campaign>
-rescue SendX::ApiError => e
-  puts "Error when calling CampaignApi->edit_campaign_with_http_info: #{e}"
-end
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **campaign_request** | [**CampaignRequest**](CampaignRequest.md) |  |  |
-| **campaign_id** | **String** | The ID of the campaign to edit |  |
-
-### Return type
-
-[**Campaign**](Campaign.md)
-
-### Authorization
-
-[apiKeyAuth](../README.md#apiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-
 ## get_all_campaigns
 
-> <Array<Campaign>> get_all_campaigns(opts)
+> <Array<RestRCampaign>> get_all_campaigns(opts)
 
-Get All Campaigns
+Get all campaigns
 
-Retrieve a list of all campaigns.
+Retrieves a paginated list of all campaigns. 
 
 ### Examples
 
@@ -241,21 +167,21 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::CampaignApi.new
 opts = {
-  offset: 56, # Integer | Offset for pagination
-  limit: 56, # Integer | Limit for pagination
-  search: 'search_example' # String | Search term to filter campaigns
+  offset: 56, # Integer | Number of campaigns to skip
+  limit: 56, # Integer | Maximum number of campaigns to return
+  campaign_type: 'all' # String | Filter by campaign type
 }
 
 begin
-  # Get All Campaigns
+  # Get all campaigns
   result = api_instance.get_all_campaigns(opts)
   p result
 rescue SendX::ApiError => e
@@ -267,15 +193,15 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Array<Campaign>>, Integer, Hash)> get_all_campaigns_with_http_info(opts)
+> <Array(<Array<RestRCampaign>>, Integer, Hash)> get_all_campaigns_with_http_info(opts)
 
 ```ruby
 begin
-  # Get All Campaigns
+  # Get all campaigns
   data, status_code, headers = api_instance.get_all_campaigns_with_http_info(opts)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Array<Campaign>>
+  p data # => <Array<RestRCampaign>>
 rescue SendX::ApiError => e
   puts "Error when calling CampaignApi->get_all_campaigns_with_http_info: #{e}"
 end
@@ -285,17 +211,17 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **offset** | **Integer** | Offset for pagination | [optional][default to 0] |
-| **limit** | **Integer** | Limit for pagination | [optional][default to 20] |
-| **search** | **String** | Search term to filter campaigns | [optional] |
+| **offset** | **Integer** | Number of campaigns to skip | [optional][default to 0] |
+| **limit** | **Integer** | Maximum number of campaigns to return | [optional][default to 10] |
+| **campaign_type** | **String** | Filter by campaign type | [optional][default to &#39;all&#39;] |
 
 ### Return type
 
-[**Array&lt;Campaign&gt;**](Campaign.md)
+[**Array&lt;RestRCampaign&gt;**](RestRCampaign.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
@@ -303,13 +229,13 @@ end
 - **Accept**: application/json
 
 
-## get_campaign_by_id
+## get_campaign
 
-> <Campaign> get_campaign_by_id(campaign_id)
+> <RestRCampaign> get_campaign(identifier)
 
-Get Campaign By Id
+Get campaign by ID
 
-Retrieve a specific campaign using its ID.
+Retrieves detailed information about a specific campaign. 
 
 ### Examples
 
@@ -318,39 +244,39 @@ require 'time'
 require 'sendx-ruby-sdk'
 # setup authorization
 SendX.configure do |config|
-  # Configure API key authorization: apiKeyAuth
-  config.api_key['apiKeyAuth'] = 'YOUR API KEY'
+  # Configure API key authorization: TeamApiKey
+  config.api_key['X-Team-ApiKey'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['apiKeyAuth'] = 'Bearer'
+  # config.api_key_prefix['X-Team-ApiKey'] = 'Bearer'
 end
 
 api_instance = SendX::CampaignApi.new
-campaign_id = 'campaign_id_example' # String | The ID of the campaign to retrieve.
+identifier = 'identifier_example' # String | Campaign identifier - `campaign_IMBoxK2iB5sUdgiNOjqAMA` 
 
 begin
-  # Get Campaign By Id
-  result = api_instance.get_campaign_by_id(campaign_id)
+  # Get campaign by ID
+  result = api_instance.get_campaign(identifier)
   p result
 rescue SendX::ApiError => e
-  puts "Error when calling CampaignApi->get_campaign_by_id: #{e}"
+  puts "Error when calling CampaignApi->get_campaign: #{e}"
 end
 ```
 
-#### Using the get_campaign_by_id_with_http_info variant
+#### Using the get_campaign_with_http_info variant
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Campaign>, Integer, Hash)> get_campaign_by_id_with_http_info(campaign_id)
+> <Array(<RestRCampaign>, Integer, Hash)> get_campaign_with_http_info(identifier)
 
 ```ruby
 begin
-  # Get Campaign By Id
-  data, status_code, headers = api_instance.get_campaign_by_id_with_http_info(campaign_id)
+  # Get campaign by ID
+  data, status_code, headers = api_instance.get_campaign_with_http_info(identifier)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <Campaign>
+  p data # => <RestRCampaign>
 rescue SendX::ApiError => e
-  puts "Error when calling CampaignApi->get_campaign_by_id_with_http_info: #{e}"
+  puts "Error when calling CampaignApi->get_campaign_with_http_info: #{e}"
 end
 ```
 
@@ -358,15 +284,15 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **campaign_id** | **String** | The ID of the campaign to retrieve. |  |
+| **identifier** | **String** | Campaign identifier - &#x60;campaign_IMBoxK2iB5sUdgiNOjqAMA&#x60;  |  |
 
 ### Return type
 
-[**Campaign**](Campaign.md)
+[**RestRCampaign**](RestRCampaign.md)
 
 ### Authorization
 
-[apiKeyAuth](../README.md#apiKeyAuth)
+[TeamApiKey](../README.md#TeamApiKey)
 
 ### HTTP request headers
 
